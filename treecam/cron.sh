@@ -1,0 +1,6 @@
+echo Taking picture ...
+sh /home/tc/treecam/take-picture.sh
+
+echo Uploading to treecam.frederikheld.de ...
+sh /home/tc/treecam/ftp-upload.sh
+
