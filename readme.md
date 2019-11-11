@@ -55,9 +55,9 @@ Reboot the RasPi and check if you can now ssh into it with the new hostname.
 
 ## Setup RaspiCam
 
-Install the app `rpi-videocore` to get the camera running.
+Install the app `rpi-vc` (videocore) to get the camera running.
 
-    $ tce-load -wi rpi-videocore.tcz
+    $ tce-load -wi rpi-vc.tcz
 
 Set access rights for the video device. To have them set at every boot, add the following line to `/opt/bootlocal.sh`.
 
