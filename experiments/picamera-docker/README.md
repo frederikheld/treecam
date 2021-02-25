@@ -15,11 +15,12 @@ It is following these tutorials and hints:
 In order to get it running, prepare the following:
 
 * enable the camera interface via `raspi-config`
-* enable camera for `docker` user via `udev` rule ([source](https://www.losant.com/blog/how-to-access-the-raspberry-pi-camera-in-docker))
+* enable camera for `docker` user via `udev` [source](https://www.losant.com/blog/how-to-access-the-raspberry-pi-camera-in-docker)
 
 For balenOS, some things need to be done different:
 
-* to set the `udev` rule, add `"SUBSYSTEM==\"vchiq\",MODE=\"0666\"\n"` to `config.json` ([source](https://github.com/balena-os/meta-balena#udevrules))
+* to set the `udev` rule, add `"SUBSYSTEM==\"vchiq\",MODE=\"0666\"\n"` to `config.json`  (via `config.json` on resin-boot partition of the balenaOS SD card) [source1](https://github.com/balena-os/meta-balena#udevrules) [source2](https://github.com/balena-os/meta-balena/pull/1206)
+* set fleet variables `BALENA_HOST_CONFIG_gpu_mem_512 256` and `BALENA_HOST_CONFIG_start_x 1` in balenaCloud OR defined `gpu_mem_512=256` and `start_x=1` in `config.txt` on resin-boot partition of balenaOS SD card.
 
 
 ## Build & Run
