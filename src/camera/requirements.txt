@@ -1,1 +1,3 @@
-picamera ~= 1.13
+wheel
+#picamera ~= 1.13
+TwitterAPI ~= 2.6
