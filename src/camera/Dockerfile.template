@@ -2,7 +2,8 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-python:3.9-buster
 
 RUN python3 --version && pip3 --version
 
-RUN pip3 install picamera
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
 
 WORKDIR /usr/src/app
 
