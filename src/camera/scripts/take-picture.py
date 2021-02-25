@@ -39,6 +39,7 @@ def tweet_picture():
 
     # Request a tweet:
 
+    print('Searching for Tweets ...')
     response = twitter.request('search/tweets', {'q': '#JustDevThings'})
     print(response.status_code)
     
@@ -48,9 +49,25 @@ def tweet_picture():
 
     # Post a tweet:
 
+    print('Tweeting status ...')
     response = twitter.request('statuses/update', {'status': 'Hello World! Part 3.'})
     print (response.status_code)
 
+    # Post picture:
+
+    print('Tweeting picture ...')
+
+    # step 1: upload image:
+    file = open('pictures/dummy.png', 'rb')
+    picture = file.read()
+    response = twitter.request('media/upload', None, {'media': picture})
+    print (response.status_code)
+
+    # step 2: tweet status with reference to uploaded picture:
+    if response.status_code == 200:
+        media_id = response.json()['media_id']
+        response = twitter.request('statuses/update', {'status': 'Hello World! This is a picture :-)', 'media_ids': media_id})
+        print (response.status_code)
 
 ### MAIN ###
 
