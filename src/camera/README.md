@@ -38,3 +38,51 @@ If you plan to use devices other than the Raspberry Pi Zero W, you can also add 
 balenaOS will then decide depending on the amount of RAM available how much to reserve for the GPU.
 
 Use the accroding value an number for `config.txt` on the SD card as well!
+
+## Configure Features
+
+The camera service has two main features, wich are being configured via `config.json`.
+
+Please rename `config.json_template` to `config.json` and fill in the values according to the detailled description below.
+
+### Twitter Cam
+
+The Twitter Cam feature will take pictures at given times evey day and post them to Twitter. A local copy will be kept if requested.
+
+### Timer Cam
+
+The Timer Cam feature will take pictures in the specified interval and store them on the SD card. If configured, it can also upload them to a FTPS server. A local copy will be kept if requested.
+
+The configuration object for Timer Cam looks like this:
+
+```json
+{
+    "timer_cam": {
+        "active": true,
+        "cadence": "1h30s",
+        "ftps_upload": {
+            "active": true,
+            "url": "subdomain.domain.tld",
+            "user": "",
+            "secret": ""
+        }
+    }
+}
+```
+
+| key | type | value | description |
+| - | - | - | - |
+| active | Boolean | true/false | If true, the service will be active. |
+| cadence | String | `NdNhNmNs` formatted time duration | Defines time between two pictures. The first picture is taken immediately after boot. |
+| ftps_upload | Object | configuration for FTPS upload sub-feature | Optional. If key is not given, the feature will be inactive. See details below. |
+
+The Timer Cam feature also contains a sub-features which allows upload of the images to FTPS server.
+
+| key | type | value | description |
+| - | - | - | - |
+| active | Boolean | true/false | If true, the service will be active. |
+| url | String | URL (without protocol) | Server to upload the pictures to |
+| user | String | FTP username | |
+| secret | String | FTP password | |
+
+
