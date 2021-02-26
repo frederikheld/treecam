@@ -7,6 +7,8 @@ from TwitterAPI import TwitterAPI
 
 import shutil
 
+import ftplib
+
 ### READ CONFIG ###
 
 with open("config.json") as json_config_file:
@@ -20,7 +22,7 @@ def take_picture():
     print("take_picture(): picture taken (mocked)")
 
     current_time = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    print (current_time)
+    print ('Current datetime: ' + current_time)
     file_path = os.path.join('pictures', current_time + '.png')
     shutil.copyfile('pictures/dummy.png', file_path)
     return file_path
@@ -37,7 +39,42 @@ def take_picture():
 #         raise
     
 def upload_picture(file_path):
-    print("upload_picture() not implemented yet!")
+
+    print ("initializing FTP upload")
+    with ftplib.FTP_TLS() as ftp:
+        ftp.encoding = 'utf-8'
+
+        response = ftp.connect(
+            CONFIG["timer_cam"]["ftps"]["url"],
+            21
+        )
+        print("connect > " + response)
+
+        resonse = ftp.login(
+            CONFIG["timer_cam"]["ftps"]["user"],
+            CONFIG["timer_cam"]["ftps"]["secret"]
+        )
+        print("login > " + response)
+
+        response = ftp.prot_p() # ask for secure data connection
+        print("protection > " + response)
+
+        ftp.cwd('/upload')
+
+        file_name = os.path.basename(file_path)
+        print(file_name)
+        ftp_command = "STOR " + file_name
+        print(ftp_command)
+
+        file_handler = open(file_path, 'rb')
+        response = ftp.storbinary(
+            ftp_command,
+            file_handler
+        )
+        print("upload > " + response)
+
+        ftp.dir()
+
 
 def tweet_picture(file_path, status, in_reply_to_status_id = None):
     """
@@ -66,12 +103,12 @@ def tweet_picture(file_path, status, in_reply_to_status_id = None):
     # upload image:
 
     file = open(file_path, 'rb')
-    picture = file.read()
+    file_object = file.read()
 
     response = twitter.request(
         'media/upload',
         None,
-        { 'media': picture }
+        { 'media': file_object }
     )
 
     if response.status_code != 200:
@@ -138,23 +175,22 @@ file_path = take_picture()
 
 status = upload_picture(file_path)
 
-status = tweet_picture(file_path, 'Original image tweet')
-print(status)
-if status["error"]:
-    print("Error: ", status["response"]["errors"])
-    exit()
-print(status["response"]["id"])
+# status = tweet_picture(file_path, 'Original image tweet')
+# if status["error"]:
+#     print("Error: ", status["response"]["errors"])
+#     exit()
+# print(status["response"]["id"])
 
-status = tweet_picture(file_path, 'Reply image tweet 1', status["response"]["id"])
-if status["error"]:
-    print("Error: ", status["response"]["errors"])
-    exit()
-print(status["response"]["id"])
+# status = tweet_picture(file_path, 'Reply image tweet 1', status["response"]["id"])
+# if status["error"]:
+#     print("Error: ", status["response"]["errors"])
+#     exit()
+# print(status["response"]["id"])
 
-status = tweet_picture(file_path, 'Reply image tweet 2', status["response"]["id"])
-if status["error"]:
-    print("Error: ", status["response"]["errors"])
-    exit()
-print(status["response"]["id"])
+# status = tweet_picture(file_path, 'Reply image tweet 2', status["response"]["id"])
+# if status["error"]:
+#     print("Error: ", status["response"]["errors"])
+#     exit()
+# print(status["response"]["id"])
 
 #twitter_experiments()

@@ -28,8 +28,8 @@
     },
     "timer_cam": {
         "cadence": "1h",
-        "upload_url": "",
-        "auth": {
+        "ftps": {
+            "url": "ftp.server.tld",
             "user": "",
             "secret": ""
         }
