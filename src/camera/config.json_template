@@ -27,8 +27,9 @@
         }
     },
     "timer_cam": {
+        "active": true,
         "cadence": "1h",
-        "ftps": {
+        "ftps_upload": {
             "active": true,
             "url": "subdomain.domain.tld",
             "user": "",
