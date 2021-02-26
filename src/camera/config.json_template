@@ -29,7 +29,8 @@
     "timer_cam": {
         "cadence": "1h",
         "ftps": {
-            "url": "ftp.server.tld",
+            "active": true,
+            "url": "subdomain.domain.tld",
             "user": "",
             "secret": ""
         }

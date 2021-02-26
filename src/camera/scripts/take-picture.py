@@ -40,6 +40,14 @@ def take_picture():
     
 def upload_picture(file_path):
 
+    if not "ftps" in CONFIG["timer_cam"]:
+        print("FTPS upload not configured. Skipping.")
+        return
+
+    if not CONFIG["timer_cam"]["ftps"]["active"]:
+        print("FTPS upload not active. Skipping.")
+        return
+
     print ("initializing FTP upload")
     with ftplib.FTP_TLS() as ftp:
         ftp.encoding = 'utf-8'
