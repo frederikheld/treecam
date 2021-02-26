@@ -1,0 +1,37 @@
+{
+    "twitter_cam": {
+        "threaded_daily_tweets": true,
+        "shots": [
+            {
+                "time_of_day": "08:00:00",
+                "message": "Good morning :-) #TreeCam"
+            },
+            {
+                "time_of_day": "12:00:00",
+                "message": "High noon! #TreeCam"
+            },
+            {
+                "time_of_day": "16:00:00",
+                "message": "Good afternoon :-) #TreeCam"
+            },
+            {
+                "time_of_day": "20:00:00",
+                "message": "Good night :-) #TreeCam"
+            }
+        ],
+        "secrets": {
+            "api_key": "",
+            "api_key_secret": "",
+            "access_token": "",
+            "access_token_secret": ""
+        }
+    },
+    "timer_cam": {
+        "cadence": "1h",
+        "upload_url": "",
+        "auth": {
+            "user": "",
+            "secret": ""
+        }
+    }
+}

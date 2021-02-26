@@ -1,3 +1,4 @@
-config.json
+config*.json*
+!config.json_template
 camera-env/
 pictures/
