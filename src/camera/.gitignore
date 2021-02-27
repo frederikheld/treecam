@@ -2,3 +2,5 @@ config*.json*
 !config.json_template
 camera-env/
 pictures/
+
+**/__pycache__

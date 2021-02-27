@@ -1,4 +1,7 @@
 {
+    "global": {
+        "filename_time_format": "%Y-%m-%d_%H-%M-%S"
+    },
     "twitter_cam": {
         "threaded_daily_tweets": true,
         "shots": [

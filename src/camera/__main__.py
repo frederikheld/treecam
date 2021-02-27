@@ -1,0 +1,46 @@
+from modules.feature.helloworld import HelloWorld
+from modules.feature.takepicture import TakePicture
+from modules.feature.postontwitter import PostOnTwitter
+from modules.feature.ftpsupload import FTPSUpload
+
+from datetime import datetime
+
+import json
+
+def main():
+    # testing stuff:
+    hello = HelloWorld()
+    hello.hello()
+    hello.hello('Fred')
+
+    # load config:
+    with open('config.json', 'rt') as json_config_file:
+        CONFIG = json.load(json_config_file)
+
+    # take picture:
+    takePicture = TakePicture(CONFIG['take_picture'])
+    image_object = takePicture.take_picture()
+
+    # post picture to Twitter:
+    postOnTwitter = PostOnTwitter(CONFIG['post_on_twitter'])
+    result = postOnTwitter.post(
+        'Hello Twitter! ' + image_object.get_timestamp_created().strftime(CONFIG['global']['filename_time_format']),
+        image_object,
+        in_reply_to_status_id = None
+    )
+
+    if result['error']:
+        print('PostOnTwitter failed! ' + result.respones)
+
+    # upload to FTPS server:
+    ftps_config = CONFIG['ftps_upload']
+    ftps_config['filename_time_format'] = CONFIG['global']['filename_time_format']
+    ftpsUpload = FTPSUpload(ftps_config)
+    result = ftpsUpload.upload(image_object)
+
+    # NOTE: The handling of ftps_config is just a workaround until we have a proper config data object
+
+    if result['error']:
+        print('FTPSUplod failed! ' + result.response)
+
+main()

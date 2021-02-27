@@ -45,6 +45,26 @@ The camera service has two main features, wich are being configured via `config.
 
 Please rename `config.json_template` to `config.json` and fill in the values according to the detailled description below.
 
+The config consists of a global config as well as individual configs for each feature.
+
+> Note: At the moment the global and the feature-specific configs need to be merged manually. With upcoming updates a config data object will be introduced that handles the config and takes care of merging automatically.
+
+The global configuration object looks like this:
+
+```json
+{
+    "global": {
+      "filename_time_format": "%Y-%m-%d_%H-%M-%S"
+    }
+}
+```
+
+| key | type | value | description |
+| - | - | - | - |
+| filename_time_format | String | datetime template that can be consumed by [strftime()](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) | Datetime format used in filenames that are stored on internal storage and ftp upload |
+
+For the feature configurations please see the following sections.
+
 ### Twitter Cam
 
 The Twitter Cam feature will take pictures at given times evey day and post them to Twitter. A local copy will be kept if requested.
