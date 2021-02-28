@@ -14,7 +14,7 @@ class PostOnTwitter:
 
         self.config = config_object
 
-        self.twitter_api = TwitterAPI(
+        self.twitterAPI = TwitterAPI(
             self.config.getValue("secrets")["api_key"],
             self.config.getValue("secrets")["api_key_secret"],
             self.config.getValue("secrets")["access_token"],
@@ -47,10 +47,10 @@ class PostOnTwitter:
         media_id = None
     
         if image_object:
-            response = self.twitter_api.request(
+            response = self.twitterAPI.request(
                 'media/upload',
                 None,
-                { 'media': image_object.get_image() }
+                { 'media': image_object.getImage() }
             )
 
             if response.status_code != 200:
@@ -61,7 +61,7 @@ class PostOnTwitter:
 
             media_id = response.json()['media_id']
         
-        response = self.twitter_api.request(
+        response = self.twitterAPI.request(
             'statuses/update',
             {
                 'status': status_message,

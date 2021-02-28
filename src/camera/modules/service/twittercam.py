@@ -5,23 +5,27 @@ from modules.data.image import Image
 
 from modules.service.abstractservice import AbstractService
 from modules.feature.takepicture import TakePicture
-from modules.feature.ftpsupload import FTPSUpload
+from modules.feature.postontwitter import PostOnTwitter
 
-class TimerCam(AbstractService):
+class TwitterCam(AbstractService):
 
     def __init__(self, config):
         super().__init__(config)
 
         # define features:
         self.takePicture = TakePicture(self.config.getFeatureConfig('take_picture'))
-        self.ftpsUpload = FTPSUpload(self.config.getFeatureConfig('ftps_upload'))
+        self.postOnTwitter = PostOnTwitter(self.config.getFeatureConfig('post_on_twitter'))
 
     def run(self, current_time) -> bool:
         if self.serviceIsActive():
             if self.serviceIsDueToRun():
                 image_object = self.takePicture.takePicture()
 
-                result = self.ftpsUpload.upload(image_object)
+                result = self.postOnTwitter.post(
+                    'Hello Twitter! ' + image_object.getTimestampCreated().strftime(self.config.getFeatureConfig('take_picture').getValue('filename_time_format')),
+                    image_object,
+                    in_reply_to_status_id = None
+                )
 
                 if result['error']:
                     print('FTPSUplod failed! ' + result.response)

@@ -9,6 +9,7 @@ from modules.feature.postontwitter import PostOnTwitter
 from modules.feature.ftpsupload import FTPSUpload
 
 from modules.service.timercam import TimerCam
+from modules.service.twittercam import TwitterCam
 
 
 def main():
@@ -24,6 +25,10 @@ def main():
     # service TimerCam:
     timerCam = TimerCam(config.getServiceConfig('timer_cam'))
     timerCam.run(datetime.datetime.now())
+
+    # service TwitterCam:
+    twitterCam = TwitterCam(config.getServiceConfig('twitter_cam'))
+    twitterCam.run(datetime.datetime.now())
 
     # # take picture:
     # takePicture = TakePicture(config.getModuleConfig('take_picture'))
@@ -48,7 +53,6 @@ def main():
 
     #     if result['error']:
     #         print('FTPSUplod failed! ' + result.response)
-
 
 
 main()
