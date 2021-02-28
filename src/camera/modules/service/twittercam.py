@@ -9,8 +9,8 @@ from modules.feature.postontwitter import PostOnTwitter
 
 class TwitterCam(AbstractService):
 
-    def __init__(self, config):
-        super().__init__(config)
+    def __init__(self, config_object):
+        super().__init__(config_object)
 
         # define features:
         self.takePicture = TakePicture(self.config.getFeatureConfig('take_picture'))
