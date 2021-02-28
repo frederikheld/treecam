@@ -15,6 +15,8 @@ TODO:
 import warnings
 import json
 
+from modules.functions.dict import merge
+
 class Config:
 
     def __init__(self, config_dict={}):
@@ -68,7 +70,7 @@ class Config:
 
     def getServiceConfigDict(self, service_name, ignore_global_config=False):
         """
-        Returns a _shallow_ merge of the global config with the service-specific config of `service_name` as a dict.
+        Returns a deep merge of the global config with the service-specific config of `service_name` as a dict.
         Module-specific values overwrite global values.
         Merge with global config can be omitted with `ignore_global_config` flag.
         """
@@ -76,7 +78,10 @@ class Config:
         if ignore_global_config:
             return self.config_dict[service_name]
         
-        return {**self.config_dict['global'], **self.config_dict[service_name]} # COMPATIBILITY: Python3.5+
+        return merge(self.config_dict['global'], self.config_dict[service_name])
+
+        # shallow merge:
+        # return {**self.config_dict['global'], **self.config_dict[service_name]} # COMPATIBILITY: Python3.5+
 
 
     def getFeatureConfigDict(self, feature_name, ignore_global_config=False):

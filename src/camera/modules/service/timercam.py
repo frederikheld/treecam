@@ -1,4 +1,5 @@
 from datetime import datetime
+import pprint
 
 from modules.data.config import Config
 from modules.data.image import Image
@@ -16,7 +17,8 @@ class TimerCam(AbstractService):
         self.takePicture = TakePicture(self.config.getFeatureConfig('take_picture'))
         self.ftpsUpload = FTPSUpload(self.config.getFeatureConfig('ftps_upload'))
 
-    def run(self, current_time) -> Image:
+    def run(self, current_time) -> bool:
+        pprint.pprint(self.config.getConfigDict())
         if self.serviceIsActive():
             if self.serviceIsDueToRun():
                 image_object = self.takePicture.takePicture()
