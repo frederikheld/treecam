@@ -47,7 +47,7 @@ class FTPSUpload:
             response = ftp.prot_p() # ask for secure data connection
             print("protection > " + response)
 
-            ftp.cwd('/upload')
+            ftp.cwd(self.config.getValue('upload_dir'))
 
             ftp_command = "STOR " + image_object.getTimestampCreated().strftime(self.config.getValue('filename_time_format')) + '.' + image_object.getMIMEType()
             print(ftp_command)
