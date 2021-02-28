@@ -119,12 +119,15 @@ class Config:
         
         return module_config[key]
 
-    def getValue(self, key):
+    def getValue(self, key, default=None):
         """
-        Returns the value of the given key.
+        Returns the value of the given `key`. Defaults to `default` if key doesn't exist.
         """
 
-        return self.config_dict[key]
+        if key in self.config_dict:
+            return self.config_dict[key]
+        
+        return default
 
 
     """ RETURN CONFIG OBJECTS """
