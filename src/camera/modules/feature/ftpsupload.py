@@ -49,12 +49,12 @@ class FTPSUpload:
 
             ftp.cwd('/upload')
 
-            ftp_command = "STOR " + image_object.get_timestamp_created().strftime(self.config.getValue('filename_time_format')) + '.' + image_object.get_mime_type()
+            ftp_command = "STOR " + image_object.getTimestampCreated().strftime(self.config.getValue('filename_time_format')) + '.' + image_object.getMIMEType()
             print(ftp_command)
 
             response = ftp.storbinary(
                 ftp_command,
-                image_object.get_image()
+                image_object.getImage()
             )
             print("upload > " + response)
 

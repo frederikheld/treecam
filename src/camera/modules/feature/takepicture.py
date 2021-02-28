@@ -33,7 +33,7 @@ class TakePicture:
 
         with io.open(file_path, 'rb') as file_handler:
             image_object = Image()
-            image_object.store_image(
+            image_object.storeImage(
                 io.BytesIO(file_handler.read()),
                 'png'
             )

@@ -11,7 +11,7 @@ import datetime
 
 class Image:
 
-    def store_image(self,
+    def storeImage(self,
         image_bytes_object,
         mime_type,
         timestamp_created = datetime.datetime.now()
@@ -29,7 +29,7 @@ class Image:
         self.timestamp_created = timestamp_created
         self.mime_type = mime_type
 
-    def get_image(self):
+    def getImage(self):
         """
             Parameter:
                 None
@@ -40,7 +40,7 @@ class Image:
         self.image_bytes_object.seek(0) # "rewind" BytesIO stream
         return self.image_bytes_object
 
-    def get_timestamp_created(self):
+    def getTimestampCreated(self):
         """
             Parameter:
                 None
@@ -50,7 +50,7 @@ class Image:
         """
         return self.timestamp_created
 
-    def get_mime_type(self):
+    def getMIMEType(self):
         """
             Paramter:
                 None
