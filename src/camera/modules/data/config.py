@@ -12,6 +12,7 @@ TODO:
 * This could (and should!) easily be unit tested!
 """
 
+import warnings
 import json
 
 class Config:
@@ -49,16 +50,44 @@ class Config:
 
     def getModuleConfigDict(self, module_name, ignore_global_config=False):
         """
+        DEPRECATED! Use `getServiceConfigDict()` instead!
+
         Returns a _shallow_ merge of the global config with the module-specific
         config of `module_name` as a dict.
         Module-specific values overwrite global values.
         Merge with global config can be omitted with `ignore_global_config` flag.
         """
+
+        warnings.warn('Config.getModuleConfigDict() is deprecated. Use getServiceConfigDict() instead!')
         
         if ignore_global_config:
             return self.config_dict[module_name]
         
         return {**self.config_dict['global'], **self.config_dict[module_name]} # COMPATIBILITY: Python3.5+
+
+
+    def getServiceConfigDict(self, service_name, ignore_global_config=False):
+        """
+        Returns a _shallow_ merge of the global config with the service-specific config of `service_name` as a dict.
+        Module-specific values overwrite global values.
+        Merge with global config can be omitted with `ignore_global_config` flag.
+        """
+        
+        if ignore_global_config:
+            return self.config_dict[service_name]
+        
+        return {**self.config_dict['global'], **self.config_dict[service_name]} # COMPATIBILITY: Python3.5+
+
+
+    def getFeatureConfigDict(self, feature_name, ignore_global_config=False):
+        """
+        Returns the feature-specific config of `feature_name` as a dict.
+
+        This should be used after the service-specific config was separated from the config with `getServiceConfigDict()`. Note that merging with the global config takes place at service level.
+        """
+        
+        return self.config_dict['features'][feature_name]
+
 
     """ RETURN VALUES """
 
@@ -103,13 +132,35 @@ class Config:
 
     def getModuleConfig(self, module_name, ignore_global_config=False):
         """
+        DEPRECATED! Use `getServiceConfig()` instead!
+
         Returns a _shallow_ merge of the global config with the module-specific
         config of `module_name` as a Config data object.
         Module-specific values overwrite global values.
         Merge with global config can be omitted with `ignore_global_config` flag.
         """
 
+        warnings.warn('Config.getModuleConfig() is deprecated. Use getServiceConfig() instead!')
+
         return Config(self.getModuleConfigDict(module_name, ignore_global_config))
+    
+    def getServiceConfig(self, service_name, ignore_global_config=False):
+        """
+        Returns a _shallow_ merge of the global config with the service-specific config of `service_name` as a Config data object.
+        Service-specific values overwrite global values.
+        Merge with global config can be omitted with `ignore_global_config` flag.
+        """
+
+        return Config(self.getServiceConfigDict(service_name, ignore_global_config))
+
+    def getFeatureConfig(self, feature_name):
+        """
+        Returns the config of a specific feature within a serivice as a Config data object.
+
+        This should be used after the service-specific config was separated from the config with `getServiceConfig()`. Note that merging with the global config takes place at service level.
+        """
+
+        return Config(self.getFeatureConfigDict(feature_name)) 
 
     def getConfig(self):
         """

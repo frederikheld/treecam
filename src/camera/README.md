@@ -41,6 +41,8 @@ Use the accroding value an number for `config.txt` on the SD card as well!
 
 ## Configure Features
 
+> Note: this part of the documentation is not correct in all aspects as the concept of modules is currently being replaced with the concept of services and features.
+
 The camera service has two main features, wich are being configured via `config.json`.
 
 Please rename `config.json_template` to `config.json` and fill in the values according to the detailled description below.
