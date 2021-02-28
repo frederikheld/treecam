@@ -11,9 +11,6 @@ import datetime
 
 class Image:
 
-    def __init__(self, config_dict = {}):
-        self.config_dict = config_dict
-
     def store_image(self,
         image_bytes_object,
         mime_type,

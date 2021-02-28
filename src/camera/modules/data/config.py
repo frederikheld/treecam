@@ -7,6 +7,11 @@ configuration. Global configuration takes effect in each feature but can be
 over-written by feature-specific config. This object handles the merging.
 """
 
+"""
+TODO:
+* This could (and should!) easily be unit tested!
+"""
+
 import json
 
 class Config:
@@ -25,13 +30,15 @@ class Config:
         with open(file_path, 'rt') as json_config_file:
             self.config_dict = json.load(json_config_file)
 
-    def getConfig(self):
+    """ RETURN DICTS """
+
+    def getConfigDict(self):
         """
         Returns the whole config as a dict.
         """
         return self.config_dict
 
-    def getGlobalConfig(self, key=None):
+    def getGlobalConfigDict(self, key=None):
         """
         Returns the `global` part of the config as a dict.
         """
@@ -40,17 +47,73 @@ class Config:
 
         return self.config_dict['global']
 
-    def getModuleConfig(self, module_name, key=None, ignore_global_config=False):
+    def getModuleConfigDict(self, module_name, ignore_global_config=False):
         """
-        Returns a _shallow_ merge of the global config with the module-specific config of `module_name` as a dict.
+        Returns a _shallow_ merge of the global config with the module-specific
+        config of `module_name` as a dict.
         Module-specific values overwrite global values.
+        Merge with global config can be omitted with `ignore_global_config` flag.
         """
         
         if ignore_global_config:
-            module_config = self.config_dict[module_name]
+            return self.config_dict[module_name]
+        
+        return {**self.config_dict['global'], **self.config_dict[module_name]} # COMPATIBILITY: Python3.5+
+
+    """ RETURN VALUES """
+
+    def getGlobalConfigValue(self, key):
+        """
+        Returns the value of the given key from the global config.
+        """
+
+        return self.config_dict['global'][key]
+
+    def getModuleConfigValue(self, module_name, key, ignore_global_config=False):
+        """
+        Returns the value of the given key in a given module after _shallow_ merge
+        with global config.
+        Module-specific values overwrite global values.
+        Merge with global config can be omitted with `ignore_global_config` flag.
+        """
+
+        if ignore_global_config:
+            module_config = self.config_dict[module_name][key]
+
         else:
             module_config = {**self.config_dict['global'], **self.config_dict[module_name]} # COMPATIBILITY: Python3.5+
-        if key:
-            return module_config[key]
+        
+        return module_config[key]
 
-        return module_config
+    def getValue(self, key):
+        """
+        Returns the value of the given key.
+        """
+
+        return self.config_dict[key]
+
+
+    """ RETURN CONFIG OBJECTS """
+
+    def getGlobalConfig(self):
+        """
+        Returns a config data object of the global config.
+        """
+        return Config(self.getGlobalConfigDict())
+
+    def getModuleConfig(self, module_name, ignore_global_config=False):
+        """
+        Returns a _shallow_ merge of the global config with the module-specific
+        config of `module_name` as a Config data object.
+        Module-specific values overwrite global values.
+        Merge with global config can be omitted with `ignore_global_config` flag.
+        """
+
+        return Config(self.getModuleConfigDict(module_name, ignore_global_config))
+
+    def getConfig(self):
+        """
+        Returns the whole config as a Config object.
+        Note: It returns a copy of itself, not itself!
+        """
+        return Config(self.config_dict)

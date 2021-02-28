@@ -8,8 +8,12 @@ import ftplib
 
 class FTPSUpload:
 
-    def __init__(self, config_dict):
-        self.config = config_dict
+    def __init__(self, config_object):
+        """
+        Parameters:
+            config_object | Config object | Module-specific configuration
+        """
+        self.config = config_object
 
     def upload(self, image_object):
         # if not "ftps_upload" in CONFIG["timer_cam"]:
@@ -29,14 +33,14 @@ class FTPSUpload:
             ftp.encoding = 'utf-8'
 
             response = ftp.connect(
-                self.config["url"],
+                self.config.getValue("url"),
                 21
             )
             print("connect > " + response)
 
             resonse = ftp.login(
-                self.config["user"],
-                self.config["secret"]
+                self.config.getValue("user"),
+                self.config.getValue("secret")
             )
             print("login > " + response)
 
@@ -45,7 +49,7 @@ class FTPSUpload:
 
             ftp.cwd('/upload')
 
-            ftp_command = "STOR " + image_object.get_timestamp_created().strftime(self.config['filename_time_format']) + '.' + image_object.get_mime_type()
+            ftp_command = "STOR " + image_object.get_timestamp_created().strftime(self.config.getValue('filename_time_format')) + '.' + image_object.get_mime_type()
             print(ftp_command)
 
             response = ftp.storbinary(

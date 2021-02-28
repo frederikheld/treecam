@@ -9,12 +9,15 @@ from modules.data.image import Image
 
 class TakePicture:
 
-    def __init__(self, config_dict):
-        self.config = config_dict
-
+    def __init__(self, config_object):
+        """
+        Parameters:
+            config_object | Config object | Module-specific configuration
+        """
+        self.config = config_object
 
     # mocked function for testing on non-RasPi devices:
-    def take_picture(self):
+    def takePicture(self):
         """
             Takes a picture with the RasPi cam and returns
             it as a BytesIO object.

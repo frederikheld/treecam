@@ -6,13 +6,19 @@ from TwitterAPI import TwitterAPI
 
 class PostOnTwitter:
 
-    def __init__(self, config_dict):
-        self.config = config_dict
+    def __init__(self, config_object):
+        """
+        Parameters:
+            config_object | Config object | Module-specific configuration
+        """
+
+        self.config = config_object
+
         self.twitter_api = TwitterAPI(
-            self.config["secrets"]["api_key"],
-            self.config["secrets"]["api_key_secret"],
-            self.config["secrets"]["access_token"],
-            self.config["secrets"]["access_token_secret"]
+            self.config.getValue("secrets")["api_key"],
+            self.config.getValue("secrets")["api_key_secret"],
+            self.config.getValue("secrets")["access_token"],
+            self.config.getValue("secrets")["access_token_secret"]
         )
 
     def post(
@@ -22,7 +28,7 @@ class PostOnTwitter:
         in_reply_to_status_id = None):
 
         """
-        Posts on twitter
+        Posts on Twitter
 
         Parameters:
         * Posts the `status_message` as a tweet on Twitter.
