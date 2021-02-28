@@ -4,6 +4,8 @@ Periodically nudges the registered services to check if they are due to run.
 
 import time
 import datetime
+import signal
+
 
 class ServiceRunner:
 
@@ -12,12 +14,20 @@ class ServiceRunner:
 
         self.services = []
 
+        signal.signal(signal.SIGINT, self.stop)
+        signal.signal(signal.SIGTERM, self.stop)
+
+        self.running = False
+
     def registerService(self, service):
         self.services.append(service)
 
     def start(self):
+        print('[ServiceRunner] Started.')
+
+        self.running = True
         
-        while True:
+        while self.running:
             print('[ServiceRunner] Running Services...')
 
             for service in self.services:
@@ -26,3 +36,10 @@ class ServiceRunner:
             print('[ServiceRunner] Done.')
 
             time.sleep(self.config.getValue('runner_interval', 1))
+        
+        print('[ServiceRunner] Stopped.')
+
+    def stop(self, signum, frame):
+        print('[ServiceRunner] Received ' + signal.Signals(signum).name + ' signal. Will stop after this run...')
+
+        self.running = False

@@ -58,6 +58,6 @@ class FTPSUpload:
             )
             print("upload > " + response)
 
-            ftp.dir() # DEBUG
+            # ftp.dir() # DEBUG
 
         return { "error": False }
