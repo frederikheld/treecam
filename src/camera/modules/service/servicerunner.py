@@ -35,7 +35,9 @@ class ServiceRunner:
 
             print('[ServiceRunner] Done.')
 
-            time.sleep(self.config.getValue('runner_interval', 1))
+            if self.running:
+                print('[ServiceRunner] Sleeping for', self.config.getValue('runner_interval', 1), 's.')
+                time.sleep(self.config.getValue('runner_interval', 1))
         
         print('[ServiceRunner] Stopped.')
 
