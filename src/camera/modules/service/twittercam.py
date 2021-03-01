@@ -18,7 +18,8 @@ class TwitterCam(AbstractService):
 
     def run(self, current_time) -> bool:
         if self.serviceIsActive():
-            if self.serviceIsDueToRun():
+            if self.serviceIsDueToRun(current_time):
+                print('[TwitterCam] Running ...')
                 image_object = self.takePicture.takePicture()
 
                 result = self.postOnTwitter.post(
@@ -30,7 +31,15 @@ class TwitterCam(AbstractService):
                 if result['error']:
                     print('FTPSUplod failed! ' + result.response)
 
+                print('[TwitterCam] Done.')
+
+            else:
+                print('[TwitterCam] Not due to run')
+
+        else:
+            print('[TwitterCam] Inactive')
+
         return True
 
-    def serviceIsDueToRun(self) -> bool:
+    def serviceIsDueToRun(self, current_time) -> bool:
         return True # TODO: check if service is due to run
