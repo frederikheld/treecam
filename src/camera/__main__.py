@@ -24,7 +24,7 @@ def main():
     config.loadConfigFromJSONFile('config.json')
 
     # init ServiceRunner:
-    serviceRunner = ServiceRunner(config.getServiceConfig('global'))
+    serviceRunner = ServiceRunner(config.getServiceConfig('service_runner'))
     
     # init service TimerCam:
     timerCam = TimerCam(config.getServiceConfig('timer_cam'))
