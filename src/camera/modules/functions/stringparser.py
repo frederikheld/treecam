@@ -10,8 +10,6 @@ def parseDuration(string):
 
     result = re.findall(regex, string)
 
-    print(result)
-
     if len(result) == 0:
         raise ValueError
 
