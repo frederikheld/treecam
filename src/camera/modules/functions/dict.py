@@ -1,13 +1,19 @@
+import copy
+
 def merge(base, add):
     """
     Deep merges `add` over `base`.
+    This will return a new dict. The input dicts `base` and `add` stay untouched.
     """
-    for key, value in add.items():
+    A = copy.deepcopy(base)
+    B = copy.deepcopy(add)
+
+    for key, value in B.items():
         if isinstance(value, dict):
             # get node or create one
-            node = base.setdefault(key, {})
+            node = A.setdefault(key, {})
             merge(value, node)
         else:
-            base[key] = value
+            A[key] = value
 
-    return base
+    return A
