@@ -51,7 +51,7 @@ class TwitterCam(AbstractService):
                 )
 
                 if result['error']:
-                    print('FTPSUplod failed! ' + result.response)
+                    print('[TwitterCam] FTPSUplod failed! ' + result.response)
 
                 self.shots[shot_to_be_run]['last_execution_time'] = datetime.datetime.now()
 
@@ -101,25 +101,26 @@ class TwitterCam(AbstractService):
         for i in range(len(self.shots)):
             print('[TwitterCam] ' + self.shots[i]['time_of_day'] + ':')
             lte = self.shots[i]['last_execution_time'] or 'never'
-            print('[TwitterCam] > last time executed:', lte)
+            print('[TwitterCam] ℹ last time executed:', lte)
 
             if getTimeOfDayFromString(self.shots[i]['time_of_day']) <= now:
-                print('[TwitterCam] > not in future')
+                print('[TwitterCam] ✔️ not in future')
 
-                if getTimeOfDayFromString(self.shots[i+1]['time_of_day']) <= now:
-                    print('[TwitterCam] > next shot not in future --> pass')
+                if len(self.shots) > i+1 and getTimeOfDayFromString(self.shots[i+1]['time_of_day']) <= now:
+                    print('[TwitterCam] x next shot not in future --> pass')
+                
                     if not shotAlreadyExecutedToday(i):
-                        print('[TwitterCam] > (this shot is over-due and is therefore being skipped!)')
+                        print('[TwitterCam] ⚠️ (this shot is over-due but will be skipped!)')
 
                 else:
-                    print('[TwitterCam] > next shot in future')
+                    print('[TwitterCam] ✔️ next shot in future')
                     if not shotAlreadyExecutedToday(i):
-                        print('[TwitterCam] > not exectued today --> execute')
+                        print('[TwitterCam] ✔️ not exectued today --> execute')
                         return i
                     else:
-                        print('[TwitterCam] > already executed today --> no shot to run')
+                        print('[TwitterCam] ⚠️ already executed today --> no shot to run')
                         return None
 
             else:
-                print('[TwitterCam] > in future --> pass')
+                print('[TwitterCam] x in future --> pass')
                 pass
