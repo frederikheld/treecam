@@ -1,0 +1,30 @@
+version: "2.1"
+
+services:
+  wifi-connect:
+    build: 
+      context: ./wifi-connect
+      args:
+        VERSION: "4.4.4"
+    network_mode: "host"
+    labels:
+      io.balena.features.dbus: '1'
+    cap_add:
+      - NET_ADMIN
+    environment:
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+      PORTAL_GATEWAY: "192.168.3.1"
+      PORTAL_LISTENING_PORT: "80"
+      PORTAL_DHCP_RANGE: "192.168.3.2,192.168.3.254"
+      PORTAL_INTERFACE: "wlan0"
+      PORTAL_SSID: "treecam"
+      ACTIVITY_TIMEOUT: 3600
+
+  camera:
+    build:
+      context: ./camera
+    labels:
+      io.balena.features.kernel-modules: '1'
+    devices:
+      - "/dev/vcsm-cma:/dev/vcsm-cma"
+      - "/dev/vchiq:/dev/vchiq"

@@ -1,0 +1,71 @@
+{
+    "global": {
+        "features": {
+            "take_picture": {
+                "filename_time_format": "%Y-%m-%d_%H-%M-%S"
+            },
+            "ftps_upload": {
+                "url": "?",
+                "upload_dir": "/upload",
+                "user": "?",
+                "secret": "?",
+                "filename_time_format": "%Y-%m-%d_%H-%M-%S"
+            },
+            "post_on_twitter": {
+                "threaded_daily_tweets": true,
+                "secrets": {
+                    "api_key": "?",
+                    "api_key_secret": "?",
+                    "access_token": "?",
+                    "access_token_secret": "?"
+                },
+                "timeout": 10
+            }
+        }
+    },
+    "service_runner": {
+        "interval": 1
+    },
+    "timer_cam": {
+        "active": true,
+        "interval": "1h",
+        "features": {
+            "take_picture": {
+                "active": true
+            },
+            "ftps_upload": {
+                "active": true
+            }
+        }
+    },
+    "twitter_cam": {
+        "active": true,
+        "features": {
+            "take_picture": {
+                "active": true
+            },
+            "post_on_twitter": {
+                "active": true
+            }
+        },
+        "threaded_daily_tweets": true,
+        "shots": [
+            {
+                "time_of_day": "08:00:00",
+                "message": "Good morning :-) #TreeCam"
+            },
+            {
+                "time_of_day": "12:00:00",
+                "message": "High noon! #TreeCam"
+            },
+            {
+                "time_of_day": "16:00:00",
+                "message": "Good afternoon :-) #TreeCam"
+            },
+            {
+                "time_of_day": "20:00:00",
+                "message": "Good night :-) #TreeCam"
+            }
+        ]
+    }
+}

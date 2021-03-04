@@ -1,0 +1,8 @@
+config*.json*
+!config.json_template
+
+camera-env/
+**/__pycache__
+.pytest_cache
+pictures/
+logs.txt
