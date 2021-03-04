@@ -39,17 +39,15 @@ balenaOS will then decide depending on the amount of RAM available how much to r
 
 Use the accroding value an number for `config.txt` on the SD card as well!
 
-## Configure Features
+## Configuration
 
-> Note: this part of the documentation is not correct in all aspects as the concept of modules is currently being replaced with the concept of services and features.
-
-The camera service has two main features, wich are being configured via `config.json`.
+_TreeCam_ comes with different services that each can use different features. The configuration for all of those can be done via `config.json`.
 
 Please rename `config.json_template` to `config.json` and fill in the values according to the detailled description below.
 
-The config consists of a global config as well as individual configs for each feature.
+The first level of the config dict represents the services. There is one service called `global` that can be used to set default values that will apply to all features.
 
-> Note: At the moment the global and the feature-specific configs need to be merged manually. With upcoming updates a config data object will be introduced that handles the config and takes care of merging automatically.
+Within the services there are features. Different services can use the same features, but within each service the configuration for the respective feature can be set individually. Service-specific feature configurations will overwrite the global feature configuration.
 
 The global configuration object looks like this:
 
@@ -67,11 +65,34 @@ The global configuration object looks like this:
 
 For the feature configurations please see the following sections.
 
-### Twitter Cam
+### Services
+
+#### Twitter Cam
 
 The Twitter Cam feature will take pictures at given times evey day and post them to Twitter. A local copy will be kept if requested.
 
-### Timer Cam
+The configuration object for Twitter Cam looks like this:
+
+```json
+{
+  "threaded_daily_tweets": true,
+  "secrets": {
+    "api_key": "?",
+    "api_key_secret": "?",
+    "access_token": "?",
+    "access_token_secret": "?"
+  },
+  "timeout": 10
+}
+```
+
+| key | type | value | description |
+| - | - | - | - |
+| threaded_daily_tweets | Boolean | true/false | If true, all following Tweets of the day will posted as a reply to the first tweet of the day |
+| secrets | Dict | Twitter API secrets | Secrets can be generated in the Twitter developer console. |
+| timeout | Int | Time in seconds | Defines the timeout for Twitter API calls. Optional, defaults to 5 |
+
+#### Timer Cam
 
 The Timer Cam feature will take pictures in the specified interval and store them on the SD card. If configured, it can also upload them to a FTPS server. A local copy will be kept if requested.
 
@@ -79,16 +100,16 @@ The configuration object for Timer Cam looks like this:
 
 ```json
 {
-    "timer_cam": {
-        "active": true,
-        "cadence": "1h30s",
-        "ftps_upload": {
-            "active": true,
-            "url": "subdomain.domain.tld",
-            "user": "",
-            "secret": ""
-        }
+  "timer_cam": {
+    "active": true,
+    "cadence": "1h30s",
+    "ftps_upload": {
+      "active": true,
+      "url": "subdomain.domain.tld",
+      "user": "",
+      "secret": ""
     }
+  }
 }
 ```
 
@@ -107,7 +128,10 @@ The Timer Cam feature also contains a sub-features which allows upload of the im
 | user | String | FTP username | |
 | secret | String | FTP password | |
 
-# Logging
+
+### Features
+
+#### Logging
 
 Logging is done via Python's built-in [`logging`](https://docs.python.org/3/library/logging.html) library. This library has a very complex config, most of which are hidden to the user of _TreeCam_ to simplify the configuration. Some of the config values can be configured feature via `config.json`:
 
@@ -124,3 +148,15 @@ Logging is done via Python's built-in [`logging`](https://docs.python.org/3/libr
 | - | - | - | - |
 | level | String | DEBUG / INFO / WARNING / ERROR / CRITICAL | see [docs](https://docs.python.org/3/howto/logging.html) |
 | logfile | String | path to file where events will be logged | if given, events will be logged to this file, otherwise to `STDOUT` |
+
+#### take_picture
+
+// tbd
+
+#### ftps_upload
+
+// tbd
+
+#### post_on_twitter
+
+// tbd
