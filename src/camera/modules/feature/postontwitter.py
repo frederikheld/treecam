@@ -2,6 +2,9 @@
 TreeCam feature PostOnTwitter
 """
 
+import logging
+
+from TwitterAPI import TwitterConnectionError
 from TwitterAPI import TwitterAPI
 
 class PostOnTwitter:
@@ -14,12 +17,15 @@ class PostOnTwitter:
 
         self.config = config_object
 
+        self.logger = logging.getLogger(__name__)
+
         self.twitterAPI = TwitterAPI(
             self.config.getValue("secrets")["api_key"],
             self.config.getValue("secrets")["api_key_secret"],
             self.config.getValue("secrets")["access_token"],
             self.config.getValue("secrets")["access_token_secret"]
         )
+        self.twitterAPI.REST_TIMEOUT = self.config.getValue('timeout') or 5
 
     def post(
         self,
@@ -47,30 +53,37 @@ class PostOnTwitter:
         media_id = None
     
         if image_object:
-            response = self.twitterAPI.request(
-                'media/upload',
-                None,
-                { 'media': image_object.getImage() }
-            )
+            try:
+                response = self.twitterAPI.request(
+                    'media/upload',
+                    None,
+                    { 'media': image_object.getImage() }
+                )
 
-            if response.status_code != 200:
-                return {
-                    'error': True,
-                    'response': response.json()
-                }
+                if response.status_code != 200:
+                    return {
+                        'error': True,
+                        'response': response.json()
+                    }
 
-            media_id = response.json()['media_id']
-        
-        response = self.twitterAPI.request(
-            'statuses/update',
-            {
-                'status': status_message,
-                'media_ids': media_id,
-                'in_reply_to_status_id': in_reply_to_status_id
-            }
-        )
-        
-        return {
-            'error': response.status_code != 200,
-            'response': response.json()
-        }
+                media_id = response.json()['media_id']
+
+                try:
+                    response = self.twitterAPI.request(
+                        'statuses/update',
+                        {
+                            'status': status_message,
+                            'media_ids': media_id,
+                            'in_reply_to_status_id': in_reply_to_status_id
+                        }
+                    )
+
+                except TwitterConnectionError:
+                    error_message = 'Could not connect to Twitter API within ' + str(self.twitterAPI.REST_TIMEOUT) + ' seconds while trying to post the message!'
+
+                    raise ConnectionError(error_message)
+
+            except TwitterConnectionError:
+                error_message = 'Could not connect to Twitter API within ' + str(self.twitterAPI.REST_TIMEOUT) + ' seconds while trying to upload the image!'
+
+                raise ConnectionError(error_message)

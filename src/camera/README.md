@@ -107,4 +107,20 @@ The Timer Cam feature also contains a sub-features which allows upload of the im
 | user | String | FTP username | |
 | secret | String | FTP password | |
 
+# Logging
 
+Logging is done via Python's built-in [`logging`](https://docs.python.org/3/library/logging.html) library. This library has a very complex config, most of which are hidden to the user of _TreeCam_ to simplify the configuration. Some of the config values can be configured feature via `config.json`:
+
+```json
+{
+  "logging": {
+    "level": "INFO",
+    "path": "./logfile.txt"
+  }
+}
+```
+
+| key | type | value | description |
+| - | - | - | - |
+| level | String | DEBUG / INFO / WARNING / ERROR / CRITICAL | see [docs](https://docs.python.org/3/howto/logging.html) |
+| logfile | String | path to file where events will be logged | if given, events will be logged to this file, otherwise to `STDOUT` |

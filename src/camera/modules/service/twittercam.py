@@ -1,4 +1,6 @@
 import datetime
+import logging
+import sys
 
 from modules.data.config import Config
 from modules.data.image import Image
@@ -15,6 +17,9 @@ class TwitterCam(AbstractService):
     def __init__(self, config_object):
         super().__init__(config_object)
 
+        # get dependencies:
+        self.logger = logging.getLogger(__name__)
+
         # define features:
         self.takePicture = TakePicture(self.config.getFeatureConfig('take_picture'))
         self.postOnTwitter = PostOnTwitter(self.config.getFeatureConfig('post_on_twitter'))
@@ -26,8 +31,6 @@ class TwitterCam(AbstractService):
             self.shots.append(shot)
         self.shotToExecuteNext = None
 
-        print(self.shots)
-
     def getShotToExecuteNext():
         return self.shotToExecuteNext
 
@@ -37,28 +40,27 @@ class TwitterCam(AbstractService):
             shot_to_be_run = self.getShotToBeExecuted(current_time)
 
             if shot_to_be_run == None:
-                print('[TwitterCam] Not due to run')
+                self.logger.info('Not due to run')
 
             else:
-                print('[TwitterCam] Running ...')
+                self.logger.info('Running ...')
                 image_object = self.takePicture.takePicture()
 
-                result = self.postOnTwitter.post(
-                    self.shots[shot_to_be_run]['message'],
-                    # 'Hello Twitter! ' + image_object.getTimestampCreated().strftime(self.config.getFeatureConfig('take_picture').getValue('filename_time_format')),
-                    image_object,
-                    in_reply_to_status_id = None
-                )
+                try:
+                    result = self.postOnTwitter.post(
+                        self.shots[shot_to_be_run]['message'],
+                        image_object,
+                        in_reply_to_status_id = None
+                    )
+                    self.shots[shot_to_be_run]['last_execution_time'] = datetime.datetime.now()
 
-                if result['error']:
-                    print('[TwitterCam] FTPSUplod failed! ' + result.response)
+                except ConnectionError as error:
+                    self.logger.warning(error)
 
-                self.shots[shot_to_be_run]['last_execution_time'] = datetime.datetime.now()
-
-                print('[TwitterCam] Done.')
+                self.logger.info('Done.')
 
         else:
-            print('[TwitterCam] Inactive')
+            self.logger.info('Inactive')
 
         return True
 
@@ -95,32 +97,34 @@ class TwitterCam(AbstractService):
            
             return last_execution_time > midnight
 
-
         now = getTimeOfDayFromString(datetime.datetime.now().strftime(TIME_STRING_FORMAT))
 
         for i in range(len(self.shots)):
-            print('[TwitterCam] ' + self.shots[i]['time_of_day'] + ':')
-            lte = self.shots[i]['last_execution_time'] or 'never'
-            print('[TwitterCam] ℹ last time executed:', lte)
+            self.logger.info('Shot scheduled for ' + self.shots[i]['time_of_day'] + ':')
+            if self.shots[i]['last_execution_time']:
+                last_time_executed = self.shots[i]['last_execution_time'].strftime(DATETIME_STRING_FORMAT)
+            else:
+                last_time_executed = 'never'
+            self.logger.info('ℹ last time executed: ' + last_time_executed)
 
             if getTimeOfDayFromString(self.shots[i]['time_of_day']) <= now:
-                print('[TwitterCam] ✔️ not in future')
+                self.logger.info('✔️ not in future')
 
                 if len(self.shots) > i+1 and getTimeOfDayFromString(self.shots[i+1]['time_of_day']) <= now:
-                    print('[TwitterCam] x next shot not in future --> pass')
+                    self.logger.info('x next shot not in future --> pass')
                 
                     if not shotAlreadyExecutedToday(i):
-                        print('[TwitterCam] ⚠️ (this shot is over-due but will be skipped!)')
+                        self.logger.warn('⚠️ ' + 'Shot scheduled for ' + self.shots[i]['time_of_day'] + ' is over-due and will be skipped!')
 
                 else:
-                    print('[TwitterCam] ✔️ next shot in future')
+                    self.logger.info('✔️ next shot in future')
                     if not shotAlreadyExecutedToday(i):
-                        print('[TwitterCam] ✔️ not exectued today --> execute')
+                        self.logger.info('✔️ not exectued today --> execute')
                         return i
                     else:
-                        print('[TwitterCam] ⚠️ already executed today --> no shot to run')
+                        self.logger.info('⚠️ already executed today --> no shot to run')
                         return None
 
             else:
-                print('[TwitterCam] x in future --> pass')
+                self.logger.info('x in future --> pass')
                 pass

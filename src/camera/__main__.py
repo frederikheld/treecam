@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 
 from modules.data.config import Config
 
@@ -22,6 +23,14 @@ def main():
     # load config:
     config = Config()
     config.loadConfigFromJSONFile('config.json')
+
+    # configure logger:
+    loggingConfig = config.getServiceConfig('global').getFeatureConfig('logging')
+    logging.basicConfig(
+        level=logging.getLevelName(loggingConfig.getValue('level')),
+        format='%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+        filename=loggingConfig.getValue('path')
+    )
 
     # init ServiceRunner:
     serviceRunner = ServiceRunner(config.getServiceConfig('service_runner'))
