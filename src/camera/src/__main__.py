@@ -1,13 +1,9 @@
+import os
 import datetime
 import json
 import logging
 
 from modules.data.config import Config
-
-from modules.feature.helloworld import HelloWorld
-from modules.feature.takepicture import TakePicture
-from modules.feature.postontwitter import PostOnTwitter
-from modules.feature.ftpsupload import FTPSUpload
 
 from modules.service.servicerunner import ServiceRunner
 from modules.service.timercam import TimerCam
@@ -16,13 +12,13 @@ from modules.service.twittercam import TwitterCam
 
 def main():
     # testing stuff:
-    hello = HelloWorld()
-    hello.hello()
-    hello.hello('Fred')
+    # hello = HelloWorld()
+    # hello.hello()
+    # hello.hello('Fred')
 
     # load config:
     config = Config()
-    config.loadConfigFromJSONFile('config.json')
+    config.loadConfigFromJSONFile(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config.json'))
 
     # configure logger:
     loggingConfig = config.getServiceConfig('global').getFeatureConfig('logging')
@@ -39,7 +35,7 @@ def main():
     timerCam = TimerCam(config.getServiceConfig('timer_cam'))
     serviceRunner.registerService(timerCam)
 
-    # init service TwitterCam:
+    # # init service TwitterCam:
     twitterCam = TwitterCam(config.getServiceConfig('twitter_cam'))
     serviceRunner.registerService(twitterCam)
 

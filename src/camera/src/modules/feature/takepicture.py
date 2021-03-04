@@ -3,6 +3,8 @@ TreeCam feature TakePicture
 """
 
 import io
+import time
+import picamera
 
 from modules.data.image import Image
 
@@ -26,16 +28,20 @@ class TakePicture:
                 None
 
             Return:
-                ByteIO image object
+                Image object
         """
+       
+        bytes_stream = io.BytesIO()
+        with picamera.PiCamera() as camera:
+            camera.resolution = (1024, 768)
+            camera.start_preview()
+            time.sleep(2) # Give camera some time to get ready
+            camera.capture(bytes_stream, 'png')
 
-        file_path = 'pictures/dummy.png'
-
-        with io.open(file_path, 'rb') as file_handler:
-            image_object = Image()
-            image_object.storeImage(
-                io.BytesIO(file_handler.read()),
-                'png'
-            )
+        image_object = Image()
+        image_object.storeImage(
+            bytes_stream,
+            'png'
+        )
 
         return image_object

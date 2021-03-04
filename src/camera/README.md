@@ -4,6 +4,8 @@
 
 After writing the balenaOS image to the SD card do the following.
 
+> Note: the next steps don't need to be actually necessary.
+
 In the `resin-boot` partition of the balenaOS SD card edit the file `config.json` and add the following entry to the JSON object:
 
 ```json
