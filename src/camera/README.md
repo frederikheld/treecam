@@ -4,7 +4,7 @@
 
 After writing the balenaOS image to the SD card do the following.
 
-> Note: the next steps don't need to be actually necessary.
+> Note: the next steps don't seem to be actually necessary.
 
 In the `resin-boot` partition of the balenaOS SD card edit the file `config.json` and add the following entry to the JSON object:
 
@@ -90,7 +90,7 @@ The configuration object for Twitter Cam looks like this:
 
 | key | type | value | description |
 | - | - | - | - |
-| threaded_daily_tweets | Boolean | true/false | If true, all following Tweets of the day will posted as a reply to the first tweet of the day |
+| threaded_daily_tweets | Boolean | true/false | If true, all following Tweets of the day will posted as a reply to the first tweet of the day. NOT IMPLEMENTED YET! |
 | secrets | Dict | Twitter API secrets | Secrets can be generated in the Twitter developer console. |
 | timeout | Int | Time in seconds | Defines the timeout for Twitter API calls. Optional, defaults to 5 |
 

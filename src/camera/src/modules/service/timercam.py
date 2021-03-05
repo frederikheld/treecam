@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from modules.functions.stringparser import parseDuration
 
@@ -18,6 +19,8 @@ class TimerCam(AbstractService):
 
         self.lastSuccessfulExecution = None
 
+        self.logger = logging.getLogger(__name__)
+
         # define features:
         self.takePicture = TakePicture(self.config.getFeatureConfig('take_picture'))
         self.ftpsUpload = FTPSUpload(self.config.getFeatureConfig('ftps_upload'))
@@ -25,25 +28,25 @@ class TimerCam(AbstractService):
     def run(self, current_time) -> bool:
         if self.serviceIsActive():
             if self.serviceIsDueToRun(current_time):
-                print('[TimerCam] Running ...')
+                self.logger.info('Running ...')
                 image_object = self.takePicture.takePicture()
 
                 result = self.ftpsUpload.upload(image_object)
 
                 if result['error']:
-                    print('FTPSUplod failed! ' + result.response)
+                    self.logger.error('FTPSUplod failed! ' + result.response)
                     return
+                # TODO: switch from result['error'] approch to raising and catching exceptions (see ftpsupload)
                 
-                print('[TimerCam] Done.')
+                self.logger.info('Done.')
                 
                 self.lastSuccessfulExecution = datetime.datetime.now()
             else:
-                print('[TimerCam] Not due to run')
+                self.logger.info('Not due to run')
         else:
-            print('[TimerCam] Inactive')
+            self.logger.info('Inactive')
 
         return True
 
     def serviceIsDueToRun(self, current_time) -> bool:
         return self.lastSuccessfulExecution == None or self.lastSuccessfulExecution + datetime.timedelta(seconds=parseDuration(self.config.getValue('interval'))) <= current_time
-            # return True
