@@ -66,3 +66,4 @@ class FTPSUpload:
                 self.logger.warn('Could not connect to FTPS server at ' + self.config.getValue('url') + ':' + str(self.config.getValue('port')) + ': ' + str(error))
 
         return { "error": False }
+        # TODO: return True instead of dict here! This is not JS!
