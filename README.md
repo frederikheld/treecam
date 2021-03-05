@@ -39,17 +39,17 @@ See [src/README.md](src/README.md) for instructions.
 
 ## Backlog
 
-1. ✅ Can automatically take pictures at defined times at the day and upliad  (once a day, maybe even once a hour)
-2. ✅ Automatically upload the pictures to an FTP server, NAS or some other safe place
-3. ✅ Automatically post to Twitter (once a day? Mabye make on thread per day with one picture per time of day each?)
+1. ✔️ Can automatically take pictures at defined times at the day and upliad  (once a day, maybe even once a hour)
+2. ✔️ Automatically upload the pictures to an FTP server, NAS or some other safe place
+3. ✔️ Automatically post to Twitter (once a day? Mabye make on thread per day with one picture per time of day each?)
 4. Will arrange the Twitter posts in threads for each day
-5. ✅ Robust system. Sudden power outages shuld not damage the device. With power restored it should get back in operating mode without any user interaction required.
+5. ✔️ Robust system. Sudden power outages shuld not damage the device. With power restored it should get back in operating mode without any user interaction required.
 
 ### Nice to have
 
-5. ✅ Remote access to update, fix issues, etc.
+5. ✔️ Remote access to update, fix issues, etc.
 6. Setup of camera via live stream / web portal
-7. ✅ Setup of wifi via captive portal
+7. ✔️ Setup of wifi via captive portal
 8. Setup of FTP via web portal / app
 9. Setup of Twitter via web portal / app
 
