@@ -1,8 +1,30 @@
+# Contribute
+
+This tutorial focuses on the camera service in `src/camera`.
+
 ## Install
 
-Navigate to `src/camera` and activate the virtualenv with `source camera-env/bin/activate`.
+Make sure you have Python 3 installed (this code is tested with 3.8.5).
 
-Install dev packages with `pip install -r requirements-dev.txt` instead.
+Make sure that `virtualenv` is installed as well.
+
+Navigate to `src/camera` and create a virtual environment that uses Python 3.8:
+
+```sh
+$ virtualenv --python /usr/bin/python3.8 camera-env
+```
+
+Activate the virtual environment:
+
+```sh
+$ source camera-env/bin/activate
+```
+
+Install dev packages:
+
+```sh
+$ pip install -r requirements-dev.txt
+```
 
 ## Run tests
 

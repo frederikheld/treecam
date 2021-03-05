@@ -14,7 +14,7 @@ In winter it is just there. Empty and naked, sometimes covered in snow. Waiting 
 
 Year after year I think how great it would be to follow this noble tree through the year by taking one picture every day.
 
-## Use-Case-Focused Services
+## Use Case-Focused Services
 
 _TreeCam_ currently comes with two main services:
 
