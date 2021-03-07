@@ -1,5 +1,9 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-python:3.9-buster
 
+ARG TIMEZONE
+ENV TZ=${TIMEZONE}
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN python3 --version && pip3 --version
 
 COPY requirements.txt .

@@ -23,6 +23,8 @@ services:
   camera:
     build:
       context: ./camera
+      args:
+        TIMEZONE: "Europe/Berlin"
     labels:
       io.balena.features.kernel-modules: "1"
     devices:
