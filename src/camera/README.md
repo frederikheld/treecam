@@ -4,7 +4,7 @@
 
 After writing the balenaOS image to the SD card do the following.
 
-> Note: the next steps don't seem to be actually necessary.
+> Note: the next steps don't seem to be actually necessary. With the current version of balenaOS this seems to be working out of the box.
 
 In the `resin-boot` partition of the balenaOS SD card edit the file `config.json` and add the following entry to the JSON object:
 
@@ -41,9 +41,13 @@ balenaOS will then decide depending on the amount of RAM available how much to r
 
 Use the accroding value an number for `config.txt` on the SD card as well!
 
-## Configuration
+## Set Timezone
 
-_TreeCam_ comes with different services that each can use different features. The configuration for all of those can be done via `config.json`.
+In order to have your services triggered at the right time and to have your timestamps in order, you can set your local timezone for the _camera_ container. This can be done in `docker-compose.yml` in the parent directory. Default is `Europe/Berlin`.
+
+## Configure _camera_ services
+
+_camera_ comes with different services that each can use different features. The configuration for all of those can be done via `config.json`.
 
 Please rename `config.json_template` to `config.json` and fill in the values according to the detailled description below.
 
