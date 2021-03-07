@@ -8,7 +8,7 @@ services:
         VERSION: "4.4.4"
     network_mode: "host"
     labels:
-      io.balena.features.dbus: '1'
+      io.balena.features.dbus: "1"
     cap_add:
       - NET_ADMIN
     environment:
@@ -24,7 +24,7 @@ services:
     build:
       context: ./camera
     labels:
-      io.balena.features.kernel-modules: '1'
+      io.balena.features.kernel-modules: "1"
     devices:
       - "/dev/vcsm-cma:/dev/vcsm-cma"
       - "/dev/vchiq:/dev/vchiq"
