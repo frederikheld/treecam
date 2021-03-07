@@ -1,6 +1,12 @@
 """
 Mocked version of the TreeCam feature TakePicture
 which loads a picture from a file on disk.
+
+This can be used to develop on non-raspi machines
+where the `picamera` module is not available as an
+in-place replacement for TakePicture:
+
+from modules.feature.mocktakepicture import MockTakePicture as TakePicture
 """
 
 import os

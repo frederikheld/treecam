@@ -8,6 +8,7 @@ from modules.data.image import Image
 from modules.functions.datetimeparser import *
 
 from modules.feature.takepicture import TakePicture
+# from modules.feature.mocktakepicture import MockTakePicture as TakePicture
 from modules.feature.postontwitter import PostOnTwitter
 
 from modules.service.abstractservice import AbstractService
@@ -31,7 +32,7 @@ class TwitterCam(AbstractService):
             self.shots.append(shot)
         self.shotToExecuteNext = None
 
-    def getShotToExecuteNext():
+    def getShotToExecuteNext(self):
         return self.shotToExecuteNext
 
     def run(self, current_time) -> bool:

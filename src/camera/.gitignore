@@ -5,4 +5,4 @@ camera-env/
 **/__pycache__
 .pytest_cache
 pictures/
-logs.txt
+log*.txt

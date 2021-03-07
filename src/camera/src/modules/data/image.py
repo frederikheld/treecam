@@ -11,11 +11,7 @@ import datetime
 
 class Image:
 
-    def storeImage(self,
-        image_bytes_object,
-        mime_type,
-        timestamp_created = datetime.datetime.now()
-    ):
+    def storeImage(self, image_bytes_object, mime_type, timestamp_created = None):
         """
             Parameter:
                 image_bytes_object | BytesIO | the image
@@ -25,8 +21,17 @@ class Image:
             Returns:
                 None
         """
+
+        # This is necessary because Python doesn't re-evaluate function parameters!
+        # If datetime.datetime.now() is set as default in the function signature,
+        # `timestamp_created` will be the same for every picture!
+        # See: https://stackoverflow.com/questions/62399546/python-datetime-now-as-a-default-function-parameter-return-same-value-in-diffe
+        if timestamp_created:
+            self.timestamp_created = timestamp_created
+        else:
+            self.timestamp_created = datetime.datetime.now()
+
         self.image_bytes_object = image_bytes_object
-        self.timestamp_created = timestamp_created
         self.mime_type = mime_type
 
     def getImage(self):
