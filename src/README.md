@@ -13,7 +13,11 @@ On your computer:
 
 Install [balenaCLI](https://github.com/balena-io/balena-cli/blob/master/INSTALL.md), [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker Engine with Docker CLI and Docker Compose](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and a tool to write SD cards like [balenaEtcher](https://www.balena.io/etcher/) or [Raspberry Pi Imager](https://www.raspberrypi.org/software/).
 
-Use Git to clone this repository.
+Use Git to clone this repository including submodules:
+
+```sh
+$ git clone --recurse-submodules https://github.com/frederikheld/treecam.git
+```
 
 Open a terminal and navigate into the `src/` directory of the repository (this directory).
 
