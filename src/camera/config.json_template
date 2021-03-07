@@ -6,6 +6,7 @@
             },
             "ftps_upload": {
                 "url": "?",
+                "port": 21,
                 "upload_dir": "/upload",
                 "user": "?",
                 "secret": "?",
