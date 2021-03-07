@@ -7,7 +7,7 @@ from modules.data.config import Config
 from modules.data.image import Image
 
 from modules.feature.takepicture import TakePicture
-# from modules.feature.mocktakepicture import MockTakePicture
+# from modules.feature.mocktakepicture import MockTakePicture as TakePicture
 from modules.feature.ftpsupload import FTPSUpload
 
 from modules.service.abstractservice import AbstractService
