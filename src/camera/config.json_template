@@ -21,6 +21,10 @@
                     "access_token_secret": "?"
                 },
                 "timeout": 10
+            },
+            "logging": {
+                "level": "INFO",
+                "path": "logfile.txt"
             }
         }
     },
