@@ -38,8 +38,8 @@ class ServiceRunner:
             self.logger.info('Done.')
 
             if self.running:
-                self.logger.info('Sleeping for ' + str(self.config.getValue('runner_interval', 1)) + 's.')
-                time.sleep(self.config.getValue('runner_interval', 1))
+                self.logger.info('Sleeping for ' + str(self.config.getValue('interval', 1)) + 's.')
+                time.sleep(self.config.getValue('interval', 1))
         
         self.logger.info('Stopped.')
 
