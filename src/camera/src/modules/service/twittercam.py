@@ -1,3 +1,7 @@
+"""
+TreeCam service TwitterCam
+"""
+
 import datetime
 import logging
 import sys
@@ -6,6 +10,7 @@ from modules.data.config import Config
 from modules.data.image import Image
 
 from modules.functions.datetimeparser import *
+# TODO: Make this import explicit (no *). This requires fixing the global vars in this module!
 
 from modules.feature.takepicture import TakePicture
 # from modules.feature.mocktakepicture import MockTakePicture as TakePicture
@@ -36,32 +41,53 @@ class TwitterCam(AbstractService):
         return self.shotToExecuteNext
 
     def run(self, current_time) -> bool:
-        if self.serviceIsActive():
-            
-            shot_to_be_run = self.getShotToBeExecuted(current_time)
+        """
+        Returns False in case of error. Otherwise true.
+        This means that 'inactive' counts as successful run that returns True!
+        """
+        if not self.serviceIsActive():
+            self.logger.info('Inactive')
+            return True
 
-            if shot_to_be_run == None:
-                self.logger.info('Not due to run')
+        shot_to_be_executed = self.getShotToBeExecuted(current_time)
 
-            else:
-                self.logger.info('Running ...')
-                image_object = self.takePicture.takePicture()
+        if shot_to_be_executed == None:
+            self.logger.info('Not due to run')
+            return True
 
-                try:
-                    result = self.postOnTwitter.post(
-                        self.shots[shot_to_be_run]['message'],
-                        image_object,
-                        in_reply_to_status_id = None
-                    )
-                    self.shots[shot_to_be_run]['last_execution_time'] = datetime.datetime.now()
+        self.logger.info('Running ...')
 
-                except ConnectionError as error:
-                    self.logger.warning(error)
+        # provide image:
 
-                self.logger.info('Done.')
+        if not self.config.getFeatureConfig('take_picture').getValue('active'):
+            self.logger.info('Feature take_picture is inactive. Service aborted.')
+            return False
+        
+        try:
+            image_object = self.takePicture.takePicture()
+        except Exception as error:
+            self.logger.error('take_picture failed:' + str(error))
+
+        # distribute image:
+
+        if self.config.getFeatureConfig('post_on_twitter').getValue('active', False):
+            try:
+                self.postOnTwitter.post(
+                    self.shots[shot_to_be_executed]['message'],
+                    image_object,
+                    in_reply_to_status_id = None
+                )
+                self.shots[shot_to_be_executed]['last_execution_time'] = datetime.datetime.now()
+
+            except Exception as error:
+                self.logger.error('post_on_twitter failed' + str(error))
 
         else:
-            self.logger.info('Inactive')
+            self.logger.info('Feature post_on_twitter is inactive.')
+
+        # wrap-up:
+
+        self.logger.info('Done.')
 
         return True
 
