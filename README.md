@@ -1,72 +1,46 @@
 # TreeCam
 
-Right in front of my window there's this wonderful tree which guides me through the seasons of the year.
+Right in front of my window there's this wonderful tree which accompanies me through the seasons of the year.
 
-In spring I eagerly await the burst of the first buds which will soon cover the whole tree in fresh green.
+Year after year I think how great it would be to follow this noble tree through the year by taking one picture of it every day.
 
 ![This picture was taken right before the buds bursted](img/tree_right_before_spring.jpg)
 
-In summer it provides shade during the afternoon with a great sundown after the sun shows up on it's right hand side again. It also and hums from all the bees and insects that live from it's juces.
+This is what I came up with:
 
-In autumn it is my scale to see how the days get shorter every day until the sun doesn't show up on it's right hand side anymore but sets behind it. Leaves are falling and create a mess on the street below it.
+## The solution
 
-In winter it is just there. Empty and naked, sometimes covered in snow. Waiting for the spring that makes it juices flow again.
+A [Raspberry Pi W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) (other models work fine as well) with an attached [camera module](https://www.raspberrypi.org/products/camera-module-v2/) serves as the camera device that runs the software that comes with this repo. The software takes pictures and distributes them to different outlets.
 
-Year after year I think how great it would be to follow this noble tree through the year by taking one picture every day.
+Right now there are two services:
 
-## Use Case-Focused Services
+1. _Twitter Cam_: can take pictures at pre-defined times of the day and post them on [Twitter](https://twitter.com/)
+2. _Timer Cam_: can take pictures in pre-defined intervals and upload them to an FTPS server
 
-_TreeCam_ currently comes with two main services:
+Those services are simple pipelines that make use of different features that produce, process or distribute features. New features can easily be added as well as existing features can easily be re-used to create new services.
 
-1. Can automatically take pictures at defined times of the day and post them on Twitter alongside with a configured message. Messages can be configured for each time of the day individually.
-2. Can automatically take pictures in defined intervals and upload them to an FTPS server.
+Please have a look into [the camera module's readme](src/camera/README.md) to learn about the different services and features.
 
-Those services make use of the following features. New features can easily be added. New services can easily plugged together from existing and new features.
+## Robust and user-friendly
 
-## Flexible Features
+* The operating system is [balenaOS](https://www.balena.io/os/) which runs the different modules in Docker containers. _balenaOS_ is very resilient against unexpected power loss and can be updated and maintained via balenaCloud.
 
-1. Take Picture
-2. Upload Picture to FTPS server
-2. Post picture on Twitter
+* This makes it easy to operate the device in places that are difficult to access. As long as there's a WiFi connection available, you're fine.
 
-## Simple Configuration
+* The WiFi connection can be set up via a captive portal.
 
-All services and features can easily be configured via a central `config.json` file. 
+* The services can easily be configured via a central configuration file.
+
+* New features and services can be added with moderate Python skills.
+
+> Pull Requests that add new features and services are very welcome!
 
 ## Setup
 
-See [src/README.md](src/README.md) for instructions.
-
-## Backlog
-
-1. ✔️ Can automatically take pictures at defined times at the day and upliad  (once a day, maybe even once a hour)
-2. ✔️ Automatically upload the pictures to an FTP server, NAS or some other safe place
-3. ✔️ Automatically post to Twitter (once a day? Mabye make on thread per day with one picture per time of day each?)
-4. Will arrange the Twitter posts in threads for each day
-5. ✔️ Robust system. Sudden power outages shuld not damage the device. With power restored it should get back in operating mode without any user interaction required.
-
-### Nice to have
-
-5. ✔️ Remote access to update, fix issues, etc.
-6. Setup of camera via live stream / web portal
-7. ✔️ Setup of wifi via captive portal
-8. Setup of FTP via web portal / app
-9. Setup of Twitter via web portal / app
-
-## Tech Stack
-
-Year after year I start too late and never finish because the buds burst quicker than I make progress.
-
-This is the year 2021. This is another attempt to beat spring. This time based on a slightly different tech stack.
-
-* Hardware: [RasPi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) with [Camera Module](https://www.raspberrypi.org/products/camera-module-v2/) in the [official case](https://www.raspberrypi.org/products/raspberry-pi-zero-case/) (which also houses the camera). This is a compact package that allows to mount the TreeCam with some contraption made of cardboard and sticky tape at the windown in the right angle.
-* System: [balenaOS](https://www.balena.io/os/) [1] on a 4 GB MicroSD card
-* Microservices running in the balenaOS Docker environment
-
-[1] My previous attempt to satisfy requirement 4 was based on PiCore Linux. This had some drawbacks: Creating own packages for PiCore was difficult because the means were limited. For a long time PiCore didn't look like it is still under active development. And I would have needed to implement everytghing to satisfy requirement 5 by myself. After working with [balenaOS](https://www.balena.io/os/) and [balenaCloud](https://www.balena.io/cloud/) in different project, this seems to be an easier approach to achieve this.
+See [src/README.md](src/README.md) for instructions how to setup your _TreeCam_ device.
 
 ## Contribute
 
-I'd be happy to receive pull requests that add new features and services to _TreeCam_. Like features that upload pictures to other social media platforms or services that implement new use cases.
+I'd be happy to receive pull requests that add new features and services to TreeCam. For example features that upload pictures to other social media platforms or services that implement new use cases.
 
-Please have a look at [CONTRIBUTE.md](CONTRIBUTE.md) for more information.
+Please have a look into the [issues on GitHub](https://github.com/frederikheld/treecam/issues) to see what else is planned that you could support with your skills and time.
