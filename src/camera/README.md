@@ -53,35 +53,27 @@ Available services are:
 
 | Name | Purpose | Interface |
 | - | - | - |
-| [take_picture](./modules/feature/takepicture) | Take a picture with the Raspberry Pi camera | Provides an image |
-| [mock_take_picture](./modules/feature/takepicture) | A replacement for _take_picture_ which provides a picture without the need to access Raspberry Pi hardware. Can be used to develop on a non-RasPi computer. | Provides an image |
-| [post_on_twitter](modules/feature/postontwitter) |
+| [take_picture](src/modules/feature/takepicture.py) | Take a picture with the Raspberry Pi camera | Provides an image |
+| [mock_take_picture](src/modules/feature/takepicture.py) | A replacement for _take_picture_ which provides a picture without the need to access Raspberry Pi hardware. Can be used to develop on a non-RasPi computer. | Provides an image |
+| [post_on_twitter](src/modules/feature/postontwitter.py) | Posts a picture on Twitter together with a message | Consumes an image |
+| [ftps_upload](src/modules/feature/ftpsupload.py) | Uploads a picture to a FTPS server | Consumes an image |
 
-Features are used by services, which serve a specific use case. Currently 
+Features are used in combination by services, which each serve a specific use case. Each service uses one feature that provides an image and one one or multiple features that consume images and distribute images. Services are triggered by different events. They are registered with a service runner that periodically checks the services if they are due to run.
 
-_camera_ comes with different services that each can use different features. The configuration for all of those can be done via `config.json`.
+Currently there are the following services:
 
-Please rename `config.json_template` to `config.json` and fill in the values according to the detailled description below.
+| Name | Purpose | Features | Trigger |
+| - | - | - | - |
+| [Twitter Cam](src/modules/service/twittercam.py) | Takes picture at defined times of the day an posts them on twitter | take_picture, post_on_twitter | Time of day |
+| [Timer Cam](src/modules/service/timercam.py) | Takes a picture and uploads it to an FTPS server | take_picture, ftps_upload | Time interval |
 
-The first level of the config dict represents the services. There is one service called `global` that can be used to set default values that will apply to all features.
+Services can be configured via the `config.json` file. This repository comes with a `config.json_template`, which you can re-name to `config.json`. It comes with a default configuration which you can adapt to your needs.
+
+The first level of the config dict represents the services. There is one service called `global` that can be used to set default values that will be applied to the features in all services but can be overridden per service.
 
 Within the services there are features. Different services can use the same features, but within each service the configuration for the respective feature can be set individually. Service-specific feature configurations will overwrite the global feature configuration.
 
-The global configuration object looks like this:
-
-```json
-{
-    "global": {
-      "filename_time_format": "%Y-%m-%d_%H-%M-%S"
-    }
-}
-```
-
-| key | type | value | description |
-| - | - | - | - |
-| filename_time_format | String | datetime template that can be consumed by [strftime()](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) | Datetime format used in filenames that are stored on internal storage and ftp upload |
-
-For the feature configurations please see the following sections.
+> Note: the following section is not complete yet. Please refer to the `config.json_template` file to see all configuration options.
 
 ### Services
 
@@ -146,8 +138,39 @@ The Timer Cam feature also contains a sub-features which allows upload of the im
 | user | String | FTP username | |
 | secret | String | FTP password | |
 
+### Service Runner
+
+The service runner is a specific service that has the purpose to run all other services. It checks in defined intervals if the services are due to run.
+
+| key | type | value | description |
+| - | - | - | - |
+| interval | integer | time in seconds | Time in seconds between two runs of the service runner. This time should be considerably lower than the interval of interval-triggered services like Timer Cam with the runtime of the service added on top. Otherwise the next run will start later than the service would be due to run next. |
 
 ### Features
+
+#### Take Picture
+
+The global configuration object looks like this:
+
+```json
+{
+    "take_picture": {
+      "filename_time_format": "%Y-%m-%d_%H-%M-%S"
+    }
+}
+```
+
+| key | type | value | description |
+| - | - | - | - |
+| filename_time_format | String | datetime template that can be consumed by [strftime()](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) | Datetime format used in filenames that are stored on internal storage and ftp upload |
+
+#### ftps_upload
+
+// tbd
+
+#### post_on_twitter
+
+// tbd
 
 #### Logging
 
@@ -166,15 +189,3 @@ Logging is done via Python's built-in [`logging`](https://docs.python.org/3/libr
 | - | - | - | - |
 | level | String | DEBUG / INFO / WARNING / ERROR / CRITICAL | see [docs](https://docs.python.org/3/howto/logging.html) |
 | logfile | String | path to file where events will be logged | if given, events will be logged to this file, otherwise to `STDOUT` |
-
-#### take_picture
-
-// tbd
-
-#### ftps_upload
-
-// tbd
-
-#### post_on_twitter
-
-// tbd
