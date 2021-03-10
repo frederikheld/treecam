@@ -16,7 +16,7 @@ Open a terminal and navigate into the `src/` directory of the repository (the di
 
 ## Configure TreeCam
 
-At this point, please have a look into the `README.md` files of each individual service to learn how to configure the _TreeCam_ servies via `config.json` and to set the timezone in `docker-compose.yml`.
+At this point, please have a look into the `README.md` files of each individual service to learn how to configure the individual _TreeCam_ services.
 
 ## Setup balenaCloud
 
@@ -52,13 +52,15 @@ $ balena push TreeCam
 
 ## Prepare SD card
 
-Create a new device in the previously created app "TreeCam". Follow the dialog to download a balenaOS image. You can (but don't need to) specify your WiFi credentials in this dialog. If no WiFi is configured, the device will open a captive portal to configure WiFi credentials on startup.
+On balenaCloud:
 
-The download will be a `zip` file that contains an `img` file. Unzip it so that you can work with the `img` file.
+Create a new device in the previously created app "TreeCam". Follow the dialog to download a balenaOS image. You can (but don't need to) specify your WiFi credentials in this dialog. If no WiFi is configured, the device will open a captive portal to configure WiFi credentials on startup.
 
 On your computer:
 
-The previously downloaded image is an empty balenaOS image that is linked to the "TreeCam" app in your account. If you haven't configured WiFi credentials in the process, it won't even be able to pull the app from balenaCloud. This is why we are going to [preload](https://www.balena.io/docs/reference/balena-cli/#preload-image) the image before we flash it to the SD card.
+The download will be a `zip` file that contains an `img` file. Unzip it so that you can work with the `img` file.
+
+The image is an empty balenaOS image that is linked to the "TreeCam" app in your account. If you haven't configured WiFi credentials in the process, it won't even be able to pull the app from balenaCloud. This is why we are going to [preload](https://www.balena.io/docs/reference/balena-cli/#preload-image) the image before we flash it to the SD card.
 
 Make sure you're in the `src/` directory and that you have the path where you have downloaded the balenaOS image at hand. Then preload the image:
 

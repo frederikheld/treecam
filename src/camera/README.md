@@ -47,6 +47,18 @@ In order to have your services triggered at the right time and to have your time
 
 ## Configure _camera_ services
 
+_camera_ comes with a set of features that serve a specific purpose. Each feature will either provide or consume an image.
+
+Available services are:
+
+| Name | Purpose | Interface |
+| - | - | - |
+| [take_picture](./modules/feature/takepicture) | Take a picture with the Raspberry Pi camera | Provides an image |
+| [mock_take_picture](./modules/feature/takepicture) | A replacement for _take_picture_ which provides a picture without the need to access Raspberry Pi hardware. Can be used to develop on a non-RasPi computer. | Provides an image |
+| [post_on_twitter](modules/feature/postontwitter) |
+
+Features are used by services, which serve a specific use case. Currently 
+
 _camera_ comes with different services that each can use different features. The configuration for all of those can be done via `config.json`.
 
 Please rename `config.json_template` to `config.json` and fill in the values according to the detailled description below.
