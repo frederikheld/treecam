@@ -3,6 +3,20 @@ import datetime
 DATETIME_STRING_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 TIME_STRING_FORMAT = '%H:%M:%S'
 
+
+def shotAlreadyExecutedToday(last_execution_time):
+
+    if last_execution_time == None:
+        return False
+
+    midnight = datetime.datetime(
+        year=datetime.datetime.now().year,
+        month=datetime.datetime.now().month,
+        day=datetime.datetime.now().day)
+    
+    return last_execution_time > midnight
+
+
 def isSameDay(datetime_string_1, datetime_string_2):
     if datetime_string_1 == None or datetime_string_2 == None:
         return False
