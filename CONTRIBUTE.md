@@ -6,7 +6,7 @@ This tutorial focuses on the camera service in `src/camera`.
 
 Make sure you have Python 3 installed (this code is tested with 3.8.5).
 
-Make sure that `virtualenv` is installed as well.
+Make sure that `virtualenv` is installed as well. If not, install it with `$ sudo apt install python3-virtualenv`.
 
 Navigate to `src/camera` and create a virtual environment that uses Python 3.8:
 
@@ -20,7 +20,9 @@ Activate the virtual environment:
 $ source camera-env/bin/activate
 ```
 
-Install dev packages:
+Install dev packages. Unfortunately `pip` is a very clumsy package manager that can't handle different environments well. In order to install the dev packages on a non-RasPi computer, you have to make sure, that the RasPi-only dependency `picamera` is not installed (the installation would fail). Open the file `requirements.txt` and remove or comment the line `picamera ~= 1.13`.
+
+Then install all dev dependencies by running:
 
 ```sh
 $ pip install -r requirements-dev.txt
@@ -28,9 +30,11 @@ $ pip install -r requirements-dev.txt
 
 ## Run tests
 
-Make sure the virtualenv is activated (see above). Run tests with `python -m pytest`.
+Before you run the tests, switch imports of `TakePicture` in `timercam.py` and `twittercam.py` with an imports of `MockTakePicture`. The files are already prepared, you only need to uncomment and comment the related lines.
 
-It is important to not run `pytest` directly as this will result in `ModuleNotFoundError`'s.
+Make sure the virtualenv is activated (see above).
+
+Run tests with `python -m pytest`. It is important to not run `pytest` directly as this will result in `ModuleNotFoundError`'s.
 
 ## About Design
 

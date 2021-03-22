@@ -111,16 +111,15 @@ class TwitterCam(AbstractService):
         #               > no: return True
         #           > no: return False --> no shots to run now
         
-        def shotAlreadyExecutedToday(shot_id):
-            last_execution_time = self.shots[shot_id]['last_execution_time']
+        def shotAlreadyExecutedToday(last_execution_time):
 
             if last_execution_time == None:
                 return False
 
             midnight = datetime.datetime(
-                year=last_execution_time.year,
-                month=last_execution_time.month,
-                day=last_execution_time.day)
+                year=datetime.datetime.now().year,
+                month=datetime.datetime.now().month,
+                day=datetime.datetime.now().day)
            
             return last_execution_time > midnight
 
@@ -140,12 +139,12 @@ class TwitterCam(AbstractService):
                 if len(self.shots) > i+1 and getTimeOfDayFromString(self.shots[i+1]['time_of_day']) <= now:
                     self.logger.info('x next shot not in future --> pass')
                 
-                    if not shotAlreadyExecutedToday(i):
+                    if not shotAlreadyExecutedToday(self.shots[i]['last_execution_time']):
                         self.logger.warn('⚠️ ' + 'Shot scheduled for ' + self.shots[i]['time_of_day'] + ' is over-due and will be skipped!')
 
                 else:
                     self.logger.info('✔️ next shot in future')
-                    if not shotAlreadyExecutedToday(i):
+                    if not shotAlreadyExecutedToday(self.shots[i]['last_execution_time']):
                         self.logger.info('✔️ not exectued today --> execute')
                         return i
                     else:

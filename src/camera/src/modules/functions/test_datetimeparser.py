@@ -1,7 +1,60 @@
 import pytest
 import datetime
 
+from contextlib import contextmanager
+from unittest.mock import patch
+
 from modules.functions.datetimeparser import *
+
+mockDateTime = datetime.datetime(2021, 3, 21, 11, 4, 0, 123456)
+# '2021-03-02 11:04:00.123456'
+
+########################################
+# Mock functions (as contextmanager)   #
+########################################
+
+# @contextmanager
+# def mock_datetime_now(now):
+
+#     # class MockDatetimeNow:
+#     #     @classmethod
+#     #     def now(cls):
+#     #         return now
+
+#     # with patch('datetime.datetime', MockDatetimeNow):
+#     #     yield
+
+#     def now():
+#         return now
+
+#     @patch.object(datetime.datetime, 'now', MockDatetimeNow)
+
+
+########################################
+# Tests                                #
+########################################
+
+# def test_shotAlreadyExecutedToday():
+    
+#     mockDatetimeNow = datetime.datetime(2021, 3, 1)
+#     mockDatetimeInPast = datetime.datetime(2001, 1, 1)
+#     mockDatetimeInFuture = datetime.datetime(2100, 3, 5)
+
+#     # with patch.object(datetime.datetime, 'now', lambda: mockDatetimeNow):
+#     @patch.object(datetime.datetime, return_value=mockDatetimeNow)
+
+#     # with mock_datetime_now(mockDatetimeNow):
+#     # This just checks if the mock is working correctly:
+#     assert datetime.datetime.now() == mockDatetimeNow
+#     assert datetime.datetime.now() > mockDatetimeInPast
+#     assert datetime.datetime.now() < mockDatetimeInFuture
+
+#     print(datetime.datetime.now().year)
+
+#         # assert shotAlreadyExecutedToday(mockDatetimeInFuture) == False
+
+# CONTINUE: Continue here to figure out how to mock datetime.datetime.now() only while keeping all other functionality of datetime.datetime
+
 
 def test_isSameDay():
     # same day, A > B:
