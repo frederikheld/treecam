@@ -1,3 +1,6 @@
 [submodule "src/wifi-connect"]
 	path = src/wifi-connect
 	url = git@github.com:balena-io/wifi-connect.git
+[submodule "src/balena-reset"]
+	path = src/balena-reset
+	url = git@github.com:frederikheld/balena-reset.git
