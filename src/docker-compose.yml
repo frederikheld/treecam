@@ -1,6 +1,24 @@
 version: "2.1"
 
 services:
+  wifi-reset:
+    build:
+      context: ./balena-reset
+    network_mode: "host"
+    labels:
+      io.balena.features.dbus: '1'
+      io.balena.features.sysfs: '1'
+    devices:
+      - "/dev/ttyS0:/dev/ttyS0"
+    cap_add:
+      - NET_ADMIN
+      - SYS_RAWIO
+    environment:
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+      GPIO_RESET_IN: 4
+      GPIO_ACK_OUT: 5
+    restart: no
+
   wifi-connect:
     build: 
       context: ./wifi-connect

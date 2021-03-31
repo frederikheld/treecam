@@ -1,5 +1,25 @@
 # Setup
 
+## Prepare hardware
+
+Your minimal hardware requirements are:
+
+* a Raspberry Pi that comes with a CSI port (as of 2021, any RasPi except the Raspberry Pi Pico should work fine, e.g. the [RasPi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/))
+* a Raspberry Pi camera module that connects to the CSI port of the Raspberry Pi (e. g. the [Camera Module V2](https://www.raspberrypi.org/products/camera-module-v2/))
+* a network interface. The simplest way is to use a RasPi that comes with an integrated ethernet or WiFi interface. If you use a different model, you need to add one via USB. Check the compatibility lists for [WiFi](https://elinux.org/RPi_USB_Wi-Fi_Adapters) and [ethernet](https://elinux.org/RPi_USB_Ethernet_adapters) adapters.
+* a 5 V power source (via USB or GPIO)
+
+If you are planning to use the [wifi-reset](./balena-reset) service, you also need to connect a push button to `GPIO4` with a pull-down resistor to `GND`. You can also wire a LED to `GPIO5` if you want to get feedback if the reset command worked fine. You can get this feedback via balenaCloud as well.
+
+If you want to place the RasPi outdoors, you also need a water-proof housing with a window for the camera. If you want to place it inside, any RasPi case works fine.
+
+### Hardware examples
+
+|![TreeCam hardware example indoors](docs/treecam-example-indoors.jpg)|![TreeCam hardware example outdoors](docs/treecam-example-outdoors.jpg)|
+|-|-|
+|Example 1: indoors|Example 2: outdoors|
+|RasPi Zero W with ArduCam camera module. Improvised cam mount made from paper clip screwed onto the standard RasPi Case. Power via MicroUSB. No reset button.|RasPi Zero W with [RasPi HQ Camera](https://www.raspberrypi.org/products/raspberry-pi-high-quality-camera/) and wide-angle lens. Custom case made out of food container and cardboard. Power via GPIO. Simplified reset button in form of pluggable jumper cables. Additional DHT22 humidity/temperature sensor module to avoid damage thorugh dew water or excessive heat. |
+
 ## Install tooling and clone repo
 
 On your computer:
@@ -16,7 +36,7 @@ Open a terminal and navigate into the `src/` directory of the repository (the di
 
 ## Configure TreeCam
 
-At this point, please have a look into the `README.md` files of each individual service to learn how to configure the individual _TreeCam_ services.
+The configuration is done via `config.json` which is deployed to the devies via balenaCloud. Please have a look into the `README.md` files of each individual service to learn how to configure the _TreeCam_ services.
 
 ## Setup balenaCloud
 
@@ -88,14 +108,18 @@ Search for the WiFi `treecam` and connect your device to it.
 
 It will redirect you to a captive portal where you can configure the credentials for the WiFi that will connect the TreeCam device to the internet. If you aren't redirected automatically, open a web browser and navigate to `192.168.3.1`.
 
-Select your home WiFi from the list and provide your WiFi password. Save it.
+Select your home WiFi (or any other WiFi that allows internet access) from the list and provide your WiFi password. Save it.
 
-The device will now shut down the `treecam` WiFi hotspot and connect to your home WiFi instead.
+The device will now shut down the `treecam` WiFi hotspot.
 
-Connect your computer or mobile phone to your home WiFi as well.
+Unplug the device and plug it in again to reboot it. This time it will connect to the configured WiFi and it will show up in balenaCloud after a couple of minutes.
 
-## Setup TreeCam
+From now on you device should act as configured and make/upload/post pictures.
 
-> It is planned to add a web interface to configure _TreeCam_ interactively. This will be the replacement for the `config.json` configuration explained above.
+## Setup TreeCam services
+
+It is planned to add a web interface to configure _TreeCam_ interactively. This will be the replacement for the `config.json` configuration explained above.
+
+Until then, you can change `config.json` on your computer and push the changes to the device via `$ balena push TreeCam` as explained above.
 
 <!-- Check your router for the IP of the "TreeCam" device. -->
