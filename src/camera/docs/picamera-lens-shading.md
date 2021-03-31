@@ -1,8 +1,10 @@
 # Research on Lens Shading Compensation for the PiCamera
 
-Lens shading occurs when the sensor is used with a lens that alters the angle at which light falls onto the sensor by a different amount going from the center to the edges of the picture. This happens with every lens and the PiCamera module will compensate for this if the original lens is used. For any third-party lens, the effect will be visible and the correction has to configured according to the lens.
+This topic is relevant for you if you're planning to use the original PiCamera module it a third-party lens like the ArduCam camera modules. 
 
-Lens shading correction with the PiCam is not simple. This documentation collects information on how to do it.
+Lens shading occurs when the sensor is used with a lens that alters the angle at which light falls onto the sensor by a different amount going from the center to the edges of the picture. This happens with every lens and the PiCamera module compensates for the shift introduced by the original lens. If the camera module is used with any third-party lens, the compensation will most probably not fit to the lens and the shading will be visible. The correction has to configured according to the lens then.
+
+Lens shading correction with the PiCam is not trivial. The following links provide information on how to do it:
 
 * [Announcement of the PiCamera module V2](https://www.raspberrypi.org/blog/new-8-megapixel-camera-board-sale-25/). The post mentions lens shading.
 * [Lens shading calibration for ArduCam lenses](https://www.arducam.com/docs/cameras-for-raspberry-pi/native-raspberry-pi-cameras/lens-shading-calibration/). Well-written tutorial with examples for the effect and how it looks compensated. It also comes with presets for ArduCam lenses which can be taken as a basis to correct lenses from other vendors. Unfortunately the approach includes re-compiling the camera C code. There must be a simpler way. (updated on January 7th 2021)

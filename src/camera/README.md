@@ -41,6 +41,10 @@ balenaOS will then decide depending on the amount of RAM available how much to r
 
 Use the accroding value an number for `config.txt` on the SD card as well!
 
+## Apply lens correction
+
+This is only relevant if you're using the original RaspiCam with a third-party lens, like the ArduCam modules. In this case the image might have an uneven color balance between the center and the edges of the image. This is called _lens shading_ and can be corrected. See [docs/lens-shading-correction.md](docs/lens-shading-correction.md) for more information.
+
 ## Set Timezone
 
 In order to have your services triggered at the right time and to have your timestamps in order, you can set your local timezone for the _camera_ container. This can be done in `docker-compose.yml` in the parent directory. Default is `Europe/Berlin`.
