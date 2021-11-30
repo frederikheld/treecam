@@ -15,9 +15,9 @@ A [Raspberry Pi W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) (o
 Right now there are two services:
 
 1. _Twitter Cam_: can take pictures at pre-defined times of the day and post them on [Twitter](https://twitter.com/)
-2. _Timer Cam_: can take pictures in pre-defined intervals and upload them to an FTPS server
+2. _Timer Cam_: can take pictures in pre-defined intervals and upload them to a FTPS server
 
-Those services are simple pipelines that make use of different features that produce, process or distribute features. New features can easily be added as well as existing features can easily be re-used to create new services.
+Those services are simple pipelines that make use of different features that produce, process or distribute pictures. New features can easily be added as well as existing features can easily be re-used to create new services.
 
 Please have a look into [the camera module's readme](src/camera/README.md) to learn about the different services and features.
 
