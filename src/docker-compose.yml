@@ -38,6 +38,10 @@ services:
       PORTAL_SSID: "treecam"
       ACTIVITY_TIMEOUT: 3600
 
+  hvac:
+    build:
+      context: ./balena-hvac
+
   camera:
     build:
       context: ./camera

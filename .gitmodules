@@ -4,3 +4,6 @@
 [submodule "src/balena-reset"]
 	path = src/balena-reset
 	url = git@github.com:frederikheld/balena-reset.git
+[submodule "src/balena-hvac"]
+	path = src/balena-hvac
+	url = git@github.com:frederikheld/balena-hvac.git
