@@ -1,46 +1,68 @@
 version: "2.1"
 
 services:
-  wifi-reset:
-    build:
-      context: ./balena-reset
-    network_mode: "host"
-    labels:
-      io.balena.features.dbus: '1'
-      io.balena.features.sysfs: '1'
-    devices:
-      - "/dev/ttyS0:/dev/ttyS0"
-    cap_add:
-      - NET_ADMIN
-      - SYS_RAWIO
-    environment:
-      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
-      GPIO_RESET_IN: 4
-      GPIO_ACK_OUT: 5
-    restart: no
+  # wifi-reset:
+  #   build:
+  #     context: ./balena-reset
+  #   network_mode: "host"
+  #   labels:
+  #     io.balena.features.dbus: '1'
+  #     io.balena.features.sysfs: '1'
+  #   devices:
+  #     - "/dev/ttyS0:/dev/ttyS0"
+  #   cap_add:
+  #     - NET_ADMIN
+  #     - SYS_RAWIO
+  #   environment:
+  #     DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+  #     GPIO_RESET_IN: 4
+  #     GPIO_ACK_OUT: 5
+  #   restart: no
 
-  wifi-connect:
-    build: 
-      context: ./wifi-connect
-      args:
-        VERSION: "4.4.4"
-    network_mode: "host"
-    labels:
-      io.balena.features.dbus: "1"
-    cap_add:
-      - NET_ADMIN
-    environment:
-      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
-      PORTAL_GATEWAY: "192.168.3.1"
-      PORTAL_LISTENING_PORT: "80"
-      PORTAL_DHCP_RANGE: "192.168.3.2,192.168.3.254"
-      PORTAL_INTERFACE: "wlan0"
-      PORTAL_SSID: "treecam"
-      ACTIVITY_TIMEOUT: 3600
+  # wifi-connect:
+  #   build: 
+  #     context: ./wifi-connect
+  #     args:
+  #       VERSION: "4.4.4"
+  #   network_mode: "host"
+  #   labels:
+  #     io.balena.features.dbus: "1"
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+  #     PORTAL_GATEWAY: "192.168.3.1"
+  #     PORTAL_LISTENING_PORT: "80"
+  #     PORTAL_DHCP_RANGE: "192.168.3.2,192.168.3.254"
+  #     PORTAL_INTERFACE: "wlan0"
+  #     PORTAL_SSID: "treecam"
+  #     ACTIVITY_TIMEOUT: 3600
 
   hvac:
     build:
       context: ./balena-hvac
+    labels:
+      io.balena.features.dbus: "1"
+      io.balena.features.sysfs: "1"
+      io.balena.features.kernel-modules: "1"
+    devices:
+      - "/dev/mem:/dev/mem"
+      - "/dev/gpiomem:/dev/gpiomem"
+      - "/dev/i2c/1:/dev/i2c/1"
+      - "/var/run:/var/run"
+    cap_add:
+      - SYS_RAWIO
+    environment:
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+      FAN_OUT: "18"
+      HEATING_OUT: "23"
+      BME280_I2C_BUS: "1"
+      BME280_I2C_ADDRESS: "\x76"
+      TEMP_UPPER_THRESHOLD: "65"
+      TEMP_LOWER_THRESHOLD: "60"
+      DEW_POINT_UPPER_MARGIN: "15"
+      DEW_POINT_LOWER_MARGIN: "10"
+    privileged: true
 
   camera:
     build:
