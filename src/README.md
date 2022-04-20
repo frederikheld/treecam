@@ -44,7 +44,7 @@ On balenaCloud:
 
 Create a [balenaCloud](https://www.balena.io/cloud/) account and log into it.
 
-Create a new app "TreeCam".
+Create a new fleet "TreeCam".
 
 On our computer:
 
@@ -56,13 +56,13 @@ $ balena login
 
 This will provide you with several different authentication methods. Web authorization is the simplest to use. Follow the instructions on the screen.
 
-Check if your app is available:
+Check if your fleet is available:
 
 ```sh
-$ balena apps
+$ balena fleets
 ```
 
-This should list your previously created "TreeCam" app.
+This should list your previously created "TreeCam" fleet.
 
 Make sure you're in the `src/` directory. Then push the app from your local repo into the cloud:
 
@@ -74,18 +74,18 @@ $ balena push TreeCam
 
 On balenaCloud:
 
-Create a new device in the previously created app "TreeCam". Follow the dialog to download a balenaOS image. You can (but don't need to) specify your WiFi credentials in this dialog. If no WiFi is configured, the device will open a captive portal to configure WiFi credentials on startup.
+Create a new device in the previously created fleet "TreeCam". Follow the dialog to download a balenaOS image. You can (but don't need to) specify your WiFi credentials in this dialog. If no WiFi is configured, the device will open a captive portal to configure WiFi credentials on startup.
 
 On your computer:
 
 The download will be a `zip` file that contains an `img` file. Unzip it so that you can work with the `img` file.
 
-The image is an empty balenaOS image that is linked to the "TreeCam" app in your account. If you haven't configured WiFi credentials in the process, it won't even be able to pull the app from balenaCloud. This is why we are going to [preload](https://www.balena.io/docs/reference/balena-cli/#preload-image) the image before we flash it to the SD card.
+The image is an empty balenaOS image that is linked to the "TreeCam" fleet in your account. If you haven't configured WiFi credentials in the process, it won't even be able to pull the app from balenaCloud. This is why we are going to [preload](https://www.balena.io/docs/reference/balena-cli/#preload-image) the image before we flash it to the SD card.
 
 Make sure you're in the `src/` directory and that you have the path where you have downloaded the balenaOS image at hand. Then preload the image:
 
 ```sh
-$ balena preload /path/to/balena.img --app TreeCam --commit current
+$ balena preload /path/to/balena.img --fleet TreeCam --commit current
 ```
 
 Now write the pre-loaded image to your SD card using an image writer software.
