@@ -39,6 +39,10 @@ Please have a look into [the camera module's readme](src/camera/README.md) to le
 
 See [src/README.md](src/README.md) for instructions how to setup your _TreeCam_ device.
 
+## Known Issues
+
+The RasPi Zero W would be the perfect device for this project because of it's low price and power consumption. Unfortunately downloading the containers from the balenaCloud will most likely fail on a low-spec device like the Zero due an issue with the balenaOS watchdog. See the related support thread here: https://forums.balena.io/t/persistent-failed-to-download-image-due-to-connect-econnrefused-var-run-balena-engine-sock-error/114001/14
+
 ## Contribute
 
 I'd be happy to receive pull requests that add new features and services to TreeCam. For example features that upload pictures to other social media platforms or services that implement new use cases.
