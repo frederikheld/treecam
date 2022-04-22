@@ -140,7 +140,7 @@ class TwitterCam(AbstractService):
                     self.logger.info('x next shot not in future --> pass')
                 
                     if not shotAlreadyExecutedToday(self.shots[i]['last_execution_time']):
-                        self.logger.warn('⚠️ ' + 'Shot scheduled for ' + self.shots[i]['time_of_day'] + ' is over-due and will be skipped!')
+                        self.logger.info('⚠️ Shot scheduled for ' + self.shots[i]['time_of_day'] + ' is over-due and will be skipped')
 
                 else:
                     self.logger.info('✔️ next shot in future')
