@@ -18,7 +18,7 @@ If you are interested in the hardware I'm running, please have a look into the [
 
 _TreeCam_ is designed to run on a [_balenaOS_](https://www.balena.io/os/) powered Raspberry Pi, which makes it resilient against sudden power outages and also allows to run updates remotely via [_balenaCloud_](https://www.balena.io/cloud). _TreeCam_ consists of different services that can be found in the subdirectories of [`./src`](./src).
 
-The [camera]((./src/camera/README.md)) service is the main service of _TreeCam_. It takes pictures and posts them to Twitter and/or an FTP server and therefore requires a RasPi camera module.
+The [camera](./src/camera/README.md) service is the main service of _TreeCam_. It takes pictures and posts them to Twitter and/or an FTP server and therefore requires a RasPi camera module.
 
 Additional services are integrated via Git submodules:
 
