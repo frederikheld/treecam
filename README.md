@@ -26,11 +26,11 @@ Additional services are integrated via Git submodules:
 
 ### Heating and Ventilation
 
-[balena-hvac](https://github.com/frederikheld/balena-hvac/README.md) is useful if you operate your camera outdoors and want to prevent damages through over-heating or condensation. It requires additional hardware!
+[balena-hvac](https://github.com/frederikheld/balena-hvac/) is useful if you operate your camera outdoors and want to prevent damages through over-heating or condensation. It requires additional hardware!
 
 ### Convenient WiFi setup
 
-[wifi-connect](https://github.com/balena-os/wifi-connect/blob/master/README.md) and [balena-reset](https://github.com/frederikheld/balena-reset/README.md) can be used to manage the WiFi connection between the _TreeCam_ and your home wifi via a captive portal and reset button. You don't need those services if you provide your WiFi credentials when downloading the image in _balenaCloud_ or if you only want to use wired networking.
+[wifi-connect](https://github.com/balena-os/wifi-connect/) and [balena-reset](https://github.com/frederikheld/balena-reset/) can be used to manage the WiFi connection between the _TreeCam_ and your home wifi via a captive portal and reset button. You don't need those services if you provide your WiFi credentials when downloading the image in _balenaCloud_ or if you only want to use wired networking.
 
 ### Configuration
 
