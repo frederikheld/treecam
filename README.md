@@ -16,17 +16,25 @@ If you are interested in the hardware I'm running, please have a look into the [
 
 ## Outline of the TreeCam services
 
-_TreeCam_ is designed to run on a [_balenaOS_](https://www.balena.io/os/) powered Raspberry Pi, which makes it resilient against sudden power outages and also allows to run updates remotely via [_balenaCloud_](https://www.balena.io/cloud). _TreeCam_ consists of different services that can be found in the subdirectories of [`./src`](./src).
+_TreeCam_ is designed to run on a [_balenaOS_](https://www.balena.io/os/) powered [_Raspberry Pi_](https://www.raspberrypi.org/), which makes it resilient against sudden power outages and also allows to run updates remotely via [_balenaCloud_](https://www.balena.io/cloud). _TreeCam_ consists of different services that can be found in the subdirectories of [`./src`](./src).
+
+### Camera
 
 The [camera](./src/camera/README.md) service is the main service of _TreeCam_. It takes pictures and posts them to Twitter and/or an FTP server and therefore requires a RasPi camera module.
 
 Additional services are integrated via Git submodules:
 
-[balena-hvac](./src/balena-hvac/README.md) is useful if you operate your camera outdoors and want to prevent damages through over-heating or condensation. It requires additional hardware!
+### Heating and Ventilation
 
-[wifi-connect](./src/wifi-connect/README.md) and [balena-reset](./src/balena-reset/README.md) can be used to manage the WiFi connection of the _TreeCam_ with your home wifi. You do not need those services if you provide your wifi credentials in _balenaCloud_ before you download the image or if you only want to use wired networking.
+[balena-hvac](https://github.com/frederikheld/balena-hvac/README.md) is useful if you operate your camera outdoors and want to prevent damages through over-heating or condensation. It requires additional hardware!
 
-The configuration of the whole installment is done (as usual for balena multi-container apps) in the [`./docker-compose.yml`](./docker-compose.yml) file in the root level of this repository. The individual configuration of each services works slightly different. Please read the `README.md` files of each service to learn about it. Each service also comes with their own exemplary `docker-compose.yml` that you can use as templates.
+### Convenient WiFi setup
+
+[wifi-connect](https://github.com/balena-os/wifi-connect/blob/master/README.md) and [balena-reset](https://github.com/frederikheld/balena-reset/README.md) can be used to manage the WiFi connection between the _TreeCam_ and your home wifi via a captive portal and reset button. You don't need those services if you provide your WiFi credentials when downloading the image in _balenaCloud_ or if you only want to use wired networking.
+
+### Configuration
+
+The configuration of the whole installment is done (as usual for [balena multi-container apps](https://www.balena.io/docs/learn/develop/multicontainer/)) in the [`./docker-compose.yml`](./docker-compose.yml) file in the root level of this repository. The individual configuration of each services works slightly different. Please read the `README.md` files of each service to learn about it. Each service also comes with their own exemplary `docker-compose.yml` that you can use as templates.
 
 ## Robust and user-friendly
 
