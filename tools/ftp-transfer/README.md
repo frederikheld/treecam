@@ -1,6 +1,6 @@
 # FTP Transfer
 
-This repository is an addition to the [TreeCam](https://github.com/frederikheld/treecam) project. It automates the archiving of pictures that were uploaded to an FTP server by the cam.
+This tool automates the archiving of pictures on a local computer after they were uploaded to an FTP server by the cam.
 
 You can use the `transfer.sh` script to transfer the pictures from the FTP server to your local computer/server/NAS. The script will file the pictures into daily subfolders and then delete the archived pictures from the FTP server to make space.
 
