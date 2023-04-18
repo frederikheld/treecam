@@ -6,7 +6,9 @@ The _camera_ service is the main service of _TreeCam_. It takes pictures and pos
 
 ## Services
 
-The services can be configured via the common configuration file `config.json`. This repository comes with a `config.json_template`, which you can rename to `config.json`. It comes with a default configuration which you can adapt to your needs.
+The services can be configured via the common configuration file `config.json`. This repository comes with a `config.json_template`, which you can rename to `config.json`. It comes with a default configuration which you can adapt to your own needs.
+
+> Note: You'll find detailed documentation of the `config.json` further down this page!
 
 At the moment the following services are available:
 
