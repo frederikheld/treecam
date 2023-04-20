@@ -35,11 +35,11 @@ The notable difference to the script file is that it already schedules a cronjob
 
 So all you have to do is build the container and then run it with the necessary environment vars passed into it.
 
-Please note that with the Docker setup, the `ARCHIVE_DIR` will not be passed as an env variable but be mounted as a volume
+Please note that with the Docker setup, the `ARCHIVE_DIR` will not be passed as an env variable but be mounted as a bind mount from the local file system to the container's `/out` directory.
 
 ```sh
 docker build -t treecam-transfer-tool .
-docker run -d --name treecam-transfer-tool -env FTP_SERVER='my.server.example' -env FTP_DIR='upload-dir' --env FTP_USER='username' --env FTP_SECRET='secret' --env ARCHIVE_DIR treecam-transfer-tool
+docker run -d --name treecam-transfer-tool -env FTP_SERVER='my.server.example' -env FTP_DIR='upload-dir' --env FTP_USER='username' --env FTP_SECRET='secret' --volume /archive-dir:/out treecam-transfer-tool
 ```
 
 Instead of providing each individual environment variable via `--env`, you can use `--env-file .env` to provide the variables from an `.env` file instead.
