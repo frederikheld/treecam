@@ -13,11 +13,18 @@ FTP_DIR
 FTP_USER
 FTP_SECRET
 ARCHIVE_DIR
+TEMP_DOWNLOAD_DIR
+TEMP_FILELIST
+TEMP_FILELIST_SUCCESSFUL
 ```
 
-`ARCHIVE_DIR` is the directory to which the pictures shall be moved after they are downloaded. The script will sort them into sub-directories by date.
+`ARCHIVE_DIR` is the local directory to which the pictures shall be moved after they are downloaded. The script will sort them into sub-directories by date.
 
 > Please note that the `ARCHIVE_DIR` has to be an existing and writable directory! The script will not try to create this directory if it does not exist to prevent having directories created in unexpected places if the setting is incorrect.
+
+`TEMP_DOWNLOAD_DIR` is a local directory where the downloads will be stored temporarily before they will be moved to their respective subdirectories in `ARCHIVE_DIR`. Be aware, that first _all_ files will be downloaded from the server to this directory, then all of them will be moved to their final destination. So make sure that the `TEMP_DOWNLOAD_DIR` has enough space available and/or the script is being run often enough!
+
+`TEMP_FILE_LIST` and `TEMP_FILE_LIST_SUCCESSFUL` are files that are being created to help the script remember which files need to be downloaded and which have been downloaded successfully. They will be automatically deleted when the downloads are finished. Just make sure that the paths are writable.
 
 Now run the script with
 
