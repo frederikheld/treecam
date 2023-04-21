@@ -35,6 +35,8 @@ The notable difference to the script file is that it already schedules a cronjob
 
 So all you have to do is build the container and then run it with the necessary environment vars passed into it.
 
+You can configure the time and frequency of the cron execution in the file `cronjobs`.
+
 Please note that with the Docker setup, the `ARCHIVE_DIR` will not be passed as an env variable but be mounted as a bind mount from the local file system to the container's `/out` directory.
 
 ```sh

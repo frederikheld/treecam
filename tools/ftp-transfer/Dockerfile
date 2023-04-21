@@ -11,9 +11,9 @@ RUN apt-get update && \
 WORKDIR /app
 
 COPY transfer.sh .
-COPY debug.sh .
+# COPY debug.sh .
 RUN chmod +x transfer.sh
-RUN chmod +x debug.sh
+# RUN chmod +x debug.sh
 
 RUN ls -la /app
 
