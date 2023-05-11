@@ -11,6 +11,12 @@
 #       - ARCHIVE_DIR
 # Deletes the files from the ftp server (only those that
 # were successfully downloaded and moved)
+# During the whole process it uses
+#       - TEMP_DOWNLOAD_DIR
+#       - TEMP_FILELIST
+#       - TEMP_FILELIST_SUCCESSFUL
+# to keep track of handled files.
+
 
 # load environment variables:
 if [ -f .env ]; then export $(cat .env | xargs); fi
@@ -24,7 +30,7 @@ if [ -z $FTP_SECRET ]; then echo "  FTP_SECRET="; else echo "  FTP_SECRET=*****"
 curl --user ${FTP_USER}:${FTP_SECRET} --ftp-ssl --ssl-reqd --ftp-method multicwd -l "ftp://${FTP_SERVER}/${FTP_DIR}/" | grep "^[^\.]" > ${TEMP_FILELIST}
 
 # DEBUG: remove all but 3 lines:
-sed -i '4,$ d' ${TEMP_FILELIST}
+# sed -i '4,$ d' ${TEMP_FILELIST}
 
 # download all files in the list:
 mkdir ${TEMP_DOWNLOAD_DIR}
@@ -38,7 +44,9 @@ done < ${TEMP_FILELIST}
 file_dates_unique=$(cat ${TEMP_FILELIST} | sed -E 's/^([0-9\-]*)_.*$/\1/' | sort -u)
 
 # DEBUG: print dates:
-echo "unique dates: ${file_dates_unique}"
+# echo "unique dates: ${file_dates_unique}"
+
+# CONTINUE: make sure, that the /out directory and the $ARCHIVE_DIR match
 
 # creates folders for each date (if not exist)
 echo "${file_dates_unique}" | {
