@@ -10,7 +10,9 @@ This repository contains the software that you can use to set up your own _TreeC
 
 ## Reference Implementation
 
-My _TreeCam_ device is posting pictures to [twitter.com/fhdevlab](https://twitter.com/fhdevlab) automatically four times a day. I will also tweet [timelapses](https://twitter.com/search?q=%40fhdevlab%20%23timelapse) and background information from time to time.
+You can see the latest picture that my _TreeCam_ device has taken at [treecam.frederikheld.de](https://treecam.frederikheld.de).
+
+<s>My _TreeCam_ device is posting pictures to [twitter.com/fhdevlab](https://twitter.com/fhdevlab) automatically four times a day. I will also tweet [timelapses](https://twitter.com/search?q=%40fhdevlab%20%23timelapse) and background information from time to time.</s> Unfortunately [not anymore](https://techcrunch.com/2023/02/01/twitter-to-end-free-access-to-its-api/).
 
 If you are interested in the hardware I'm running, please have a look into the [`./birdhouse`](./birdhouse) directory.
 
